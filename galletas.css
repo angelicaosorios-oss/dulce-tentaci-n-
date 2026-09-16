@@ -1,0 +1,264 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #fff8f0;
+    color: #4b2e20;
+}
+
+
+/* ENCABEZADO */
+.encabezado {
+    background-color: #8b4513;
+    padding: 18px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.menu {
+    display: flex;
+    gap: 25px;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.menu a:hover {
+    color: #ff8800;
+}
+
+
+/* PRESENTACIÓN */
+.presentacion {
+    background-color: #ffffff;
+    padding: 70px 20px;
+    text-align: center;
+}
+
+.texto-presentacion h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+    color: #7b4934;
+}
+
+.texto-presentacion p {
+    font-size: 18px;
+    max-width: 600px;
+    margin: auto;
+    line-height: 1.6;
+}
+
+
+/* CONTENEDOR */
+.contenedor {
+    width: 90%;
+    max-width: 1200px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.contenedor h2 {
+    font-size: 30px;
+    margin-bottom: 35px;
+    color: #9b563d;
+}
+
+
+/* PRODUCTOS */
+.productos {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+
+/* TARJETAS */
+.tarjeta {
+    background-color: white;
+    width: 280px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px #e2c5b5;
+    transition: 0.3s;
+}
+
+.tarjeta:hover {
+    transform: translateY(-8px);
+}
+
+
+/* IMAGEN */
+.imagen-producto {
+    width: 100%;
+    height: 190px;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+
+/* IMAGEN DENTRO DEL ESPACIO */
+.imagen-producto img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 15px;
+    display: block;
+}
+
+
+/* CONTENIDO */
+.contenido-tarjeta {
+    padding: 0;
+}
+
+.contenido-tarjeta h3 {
+    font-size: 22px;
+    color: #b86f52;
+    margin: 15px;
+}
+
+.contenido-tarjeta p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #5c4033;
+}
+
+
+/* PRECIO */
+.precio {
+    display: block;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #7b4934;
+}
+
+
+/* BOTÓN */
+button {
+    border: none;
+    background-color: #b86f52;
+    color: white;
+    padding: 12px 22px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #8f4e38;
+}
+
+
+/* INFORMACIÓN */
+.informacion {
+    background-color: #f9d8c3;
+    padding: 50px 8%;
+    text-align: center;
+}
+
+.informacion h2 {
+    font-size: 28px;
+    margin-bottom: 35px;
+    color: #7b4934;
+}
+
+.beneficios {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.beneficio {
+    background-color: white;
+    width: 280px;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px #e2c5b5;
+}
+
+.beneficio span {
+    font-size: 40px;
+}
+
+.beneficio h3 {
+    margin: 12px 0;
+}
+
+.beneficio p {
+    line-height: 1.5;
+}
+
+
+/* PIE DE PÁGINA */
+footer {
+    background-color: #4b2e20;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+
+/* DISEÑO PARA CELULAR */
+@media (max-width: 700px) {
+
+    .encabezado {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .menu {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .texto-presentacion h1 {
+        font-size: 32px;
+    }
+
+    .productos {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .beneficios {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menu a {
+        display: block;
+        margin: 5px auto;
+    }
+
+    .tarjeta {
+        width: 280px;
+    }
+
+    .imagen-producto {
+        height: 190px;
+    }
+
+    .imagen-producto img {
+        height: 190px;
+    }
+}
