@@ -1,0 +1,338 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+
+    background-color: #fff5f8;
+
+    color: #333;
+
+    display: flex;
+}
+
+.sidebar {
+
+    width: 220px;
+
+    min-height: 100vh;
+
+    background-color: #fffafa;
+
+    border-right: 1px solid #eee;
+
+    padding: 20px 15px;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.logo {
+
+    color: #e98aaa;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    margin-bottom: 3px;
+}
+
+.logo span {
+    color: #333;
+}
+
+.subtitulo {
+
+    font-size: 10px;
+
+    color: #777;
+
+    margin-top: 0;
+
+    margin-bottom: 25px;
+}
+
+nav {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+nav a {
+
+    text-decoration: none;
+
+    color: #444;
+
+    padding: 10px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+}
+
+nav a:hover,
+nav a.activo {
+
+    background-color: #ffd5e1;
+
+    color: #c84e76;
+
+    font-weight: bold;
+}
+.cerrar {
+
+    margin-top: auto;
+
+    text-decoration: none;
+
+    color: #777;
+
+    font-size: 13px;
+
+    padding: 10px;
+}
+
+.contenido {
+
+    flex: 1;
+
+    min-height: 100vh;
+}
+
+.barra {
+
+    height: 65px;
+
+    background-color: #f7a8bf;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 25px;
+}
+
+.nombre {
+
+    color: white;
+
+    font-size: 18px;
+}
+
+.buscador {
+
+    background-color: #eee;
+
+    border-radius: 20px;
+
+    width: 300px;
+
+    padding: 6px 12px;
+
+    color: #888;
+}
+
+.buscador input {
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    width: 250px;
+}
+
+.usuario {
+
+    color: white;
+
+    font-size: 18px;
+}
+
+.bienvenida {
+
+    padding: 20px 35px 10px;
+}
+
+.bienvenida h1 {
+
+    font-size: 20px;
+
+    margin: 0;
+
+    color: #333;
+}
+
+.bienvenida p {
+
+    margin-top: 5px;
+
+    font-size: 13px;
+
+    color: #777;
+}
+
+.estadisticas {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 15px;
+
+    padding: 10px 35px;
+}
+
+.tarjeta {
+
+    background-color: #ffd8e4;
+
+    border-radius: 12px;
+
+    padding: 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+.icono {
+
+    font-size: 25px;
+}
+
+.tarjeta p {
+
+    margin: 0;
+
+    font-size: 12px;
+
+    color: #555;
+}
+
+.tarjeta h2 {
+
+    margin: 4px 0 0;
+
+    font-size: 18px;
+}
+.pedidos {
+
+    background-color: white;
+
+    margin: 15px 35px;
+
+    padding: 20px;
+
+    border-radius: 12px;
+}
+
+.titulo-pedidos {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.titulo-pedidos h2 {
+
+    font-size: 17px;
+
+    margin: 0;
+}
+
+.titulo-pedidos a {
+
+    color: #e26d91;
+
+    font-size: 12px;
+
+    text-decoration: none;
+}
+table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    margin-top: 15px;
+
+    font-size: 12px;
+}
+
+th {
+
+    text-align: left;
+
+    color: #777;
+
+    padding: 10px;
+
+    border-bottom: 1px solid #eee;
+}
+
+td {
+
+    padding: 12px 10px;
+
+    border-bottom: 1px solid #f1f1f1;
+}
+.estado {
+
+    padding: 5px 10px;
+
+    border-radius: 15px;
+
+    font-size: 10px;
+}
+
+.pendiente {
+
+    background-color: #ffe5b5;
+
+    color: #a66a00;
+}
+
+.enviado {
+
+    background-color: #d8f1ff;
+
+    color: #287b9e;
+}
+
+.completado {
+
+    background-color: #d9f5dc;
+
+    color: #31813b;
+}
+@media (max-width: 800px) {
+
+    .sidebar {
+        width: 180px;
+    }
+
+    .estadisticas {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .buscador {
+        width: 200px;
+    }
+}

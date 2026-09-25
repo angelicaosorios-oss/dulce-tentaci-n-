@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Administrador - Dulce Rincón</title>
+
+    <link rel="stylesheet" href="administrador.css">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <span>Dulce Rincón</span>
+        </div>
+
+        <p class="subtitulo">Panel de administración</p>
+
+        <nav>
+
+            <a href="/administrador.html" class="activo">
+                 Inicio
+            </a>
+
+            <a href="/index.html">
+                 Productos
+            </a>
+
+            <a href="/categoria.html">
+                 Categorías
+            </a>
+
+            <a href="/contacto.html">
+                contacto
+            </a>
+
+            <a href="clientes.html">
+                 Clientes
+            </a>
+
+            <a href="reportes.html">
+                 Reportes
+            </a>
+
+            <a href="configuracion.html">
+                 Configuración
+            </a>
+
+        </nav>
+
+        <a href="/inicio.html" class="cerrar">
+            ⇥ Cerrar sesión
+        </a>
+
+    </aside>
+
+    <main class="contenido">
+
+        <header class="barra">
+
+            <div class="nombre">
+                 <i>Dulce Rincón</i>
+            </div>
+
+            <div class="buscador">
+                <input
+                    type="text"
+                    placeholder="Buscar..."
+                >
+            </div>
+
+            <div class="usuario">
+            </div>
+
+        </header>
+
+        <section class="bienvenida">
+
+            <h1>
+                BIENVENIDO, ADMINISTRADOR
+            </h1>
+
+            <p>
+                Aquí tienes un resumen de tu tienda
+            </p>
+
+        </section>
+
+
+        <section class="estadisticas">
+
+            <div class="tarjeta">
+
+                <span class="icono"></span>
+
+                <div>
+                    <p>Productos</p>
+                    <h2>24</h2>
+                </div>
+
+            </div>
+
+
+            <div class="tarjeta">
+
+                <span class="icono"></span>
+
+                <div>
+                    <p>Pedidos</p>
+                    <h2>18</h2>
+                </div>
+
+            </div>
+
+
+            <div class="tarjeta">
+
+                <span class="icono"></span>
+
+                <div>
+                    <p>Clientes</p>
+                    <h2>12</h2>
+                </div>
+
+            </div>
+
+
+            <div class="tarjeta">
+
+                <span class="icono"></span>
+
+                <div>
+                    <p>Ventas del mes</p>
+                    <h2>$1.250.000</h2>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="pedidos">
+
+            <div class="titulo-pedidos">
+
+                <h2>Pedidos recientes</h2>
+
+                <a href="pedidos.html">
+                    Ver todos →
+                </a>
+
+            </div>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Total</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <tr>
+
+                        <td>001</td>
+
+                        <td>Laura Gómez</td>
+
+                        <td>14/09/2026</td>
+
+                        <td>
+                            <span class="estado pendiente">
+                                En proceso
+                            </span>
+                        </td>
+
+                        <td>$45.000</td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>002</td>
+
+                        <td>Valentina Ríos</td>
+
+                        <td>14/09/2026</td>
+
+                        <td>
+                            <span class="estado enviado">
+                                Enviado
+                            </span>
+                        </td>
+
+                        <td>$52.000</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>003</td>
+
+                        <td>Camila Torres</td>
+
+                        <td>13/09/2026</td>
+
+                        <td>
+                            <span class="estado completado">
+                                Completado
+                            </span>
+                        </td>
+
+                        <td>$76.000</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

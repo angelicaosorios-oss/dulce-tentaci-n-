@@ -4,17 +4,10 @@ body {
     background-color: #b99b9b;
 }
 
-
-/* CARRUSEL */
-
 .carousel img {
     height: 330px;
     object-fit: cover;
 }
-
-
-/* PRESENTACIÓN */
-
 .presentacion {
     background-color: #ead1d1;
     text-align: center;
@@ -46,10 +39,6 @@ body {
     padding: 10px 25px;
     border-radius: 20px;
 }
-
-
-/* PRODUCTOS */
-
 .productos {
     padding: 25px;
     text-align: center;
@@ -86,4 +75,107 @@ body {
     border-radius: 20px;
     font-size: 17px;
     margin-top: 8px;
+}
+
+
+@media (max-width: 768px) {
+
+    .carousel img {
+        width: 85%;
+        height: 330px;
+    }
+
+    .texto h1 {
+        font-size: 35px;
+    }
+
+    .texto p {
+        max-width: 90%;
+    }
+
+    .contenedor-productos {
+        gap: 30px;
+    }
+
+}
+@media (max-width: 480px) {
+
+    .carousel img {
+        width: 90%;
+        height: 250px;
+    }
+
+    .presentacion {
+        padding: 25px 15px;
+    }
+
+    .texto h1 {
+        font-size: 28px;
+    }
+
+    .texto h3 {
+        font-size: 16px;
+    }
+
+    .texto p {
+        font-size: 14px;
+        max-width: 100%;
+    }
+
+    .productos {
+        padding: 25px 10px;
+    }
+
+    .productos h2 {
+        font-size: 20px;
+    }
+
+    .contenedor-productos {
+        gap: 25px 15px;
+    }
+
+    .producto img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .producto h3 {
+        font-size: 15px;
+        padding: 7px 15px;
+    }
+
+}
+@media (max-width: 360px) {
+
+    .carousel img {
+        width: 95%;
+        height: 210px;
+    }
+
+    .texto h1 {
+        font-size: 24px;
+    }
+
+    .texto h3 {
+        font-size: 14px;
+    }
+
+    .texto p {
+        font-size: 13px;
+    }
+
+    .contenedor-productos {
+        gap: 20px 10px;
+    }
+
+    .producto img {
+        width: 90px;
+        height: 90px;
+    }
+
+    .producto h3 {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+
 }

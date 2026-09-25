@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dulce Rincón - Categorías</title>
+
+    <link rel="stylesheet" href="categoria.css">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="logo">
+             <b>Dulce Rincón</b>
+            <small>administración</small>
+        </div>
+
+        <nav>
+            <a href="/administrador.html"> Inicio</a>
+            <a href="/index.html"> Productos</a>
+            <a href="categorias.html" class="activo"> Categorías</a>
+            <a href="/contacto.html"> Contacto</a>
+            <a href="/administrador.html"> Administrar home</a>
+        </nav>
+
+        <a href="/inicio.html" class="cerrar">↪ Cerrar sesión</a>
+
+    </aside>
+  
+    <main class="contenido">
+
+         CATEGORÍA 
+        <section class="crear">
+
+            <h2> Crear categoría</h2>
+            <p>Agrega una nueva categoría para tus productos.</p>
+
+            <label for="nombreCategoria">Nombre de la categoría</label>
+
+            <input
+                type="text"
+                id="nombreCategoria"
+                placeholder="Ej. Postres, Galletas..."
+            >
+
+            <div class="subir">
+                <div class="icono"></div>
+                <b>Sube una imagen aquí</b>
+                <p>Arrastra una imagen o haz clic para seleccionar</p>
+
+                <input type="file" id="imagenCategoria" accept="image/*">
+            </div>
+
+            <div class="botones">
+                <button class="cancelar" onclick="limpiarFormulario()">
+                    Cancelar
+                </button>
+
+                <button class="guardar" onclick="guardarCategoria()">
+                    Guardar categoría
+                </button>
+            </div>
+
+        </section>
+
+
+        <section class="home">
+
+            <h2>Administrar home</h2>
+            <p>Personaliza el contenido principal de tu página.</p>
+
+            <div class="banner">
+
+                <div>
+                    <h3>Banner principal</h3>
+                    <p>Imagen que aparecerá en la parte superior.</p>
+                </div>
+
+                <button>Editar</button>
+
+            </div>
+
+
+            <h3 class="titulo">Productos destacados</h3>
+
+            <div class="productos">
+
+                <div class="producto">
+                    <img src="img/postre1.jpg" alt="Producto">
+                    <div>
+                        <b>Deliciosos postres</b>
+                        <p>Los favoritos de nuestros clientes</p>
+                    </div>
+                    <button>Editar</button>
+                </div>
+
+                <div class="producto">
+                    <img src="img/postre2.jpg" alt="Producto">
+                    <div>
+                        <b>Galletas especiales</b>
+                        <p>Perfectas para cualquier ocasión</p>
+                    </div>
+                    <button>Editar</button>
+                </div>
+
+                <div class="producto">
+                    <img src="img/postre3.jpg" alt="Producto">
+                    <div>
+                        <b>Promociones</b>
+                        <p>Disfruta nuestras ofertas</p>
+                    </div>
+                    <button>Editar</button>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="/categoria.js"></script>
+
+</body>
+</html>
