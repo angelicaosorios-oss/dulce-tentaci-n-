@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Galletas Mi Dulce Rincón</title>
     <link rel="stylesheet" href="galletas.css" />
+    <link rel="stylesheet" href="visor3d.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
   </head>
   <body>
     <section class="presentacion">
@@ -14,10 +16,11 @@
       <div class="productos">
         <div class="tarjeta">
           <div class="imagen-producto">
-            <img
-              src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=600&q=80"
-              alt="Galleta de Chocolate"
-            />
+            <model-viewer class="visor-producto"
+              src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb"
+              alt="Modelo 3D de muestra (temporal) para Galleta de Chocolate"
+              camera-controls auto-rotate ar shadow-intensity="1"
+            ></model-viewer>
           </div>
           <div class="contenido-tarjeta">
             <h3>Galleta de Chocolate</h3>
@@ -30,10 +33,11 @@
         </div>
         <div class="tarjeta">
           <div class="imagen-producto">
-            <img
-              src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=600&q=80"
-              alt="galleta de dinosaurio"
-            />
+            <model-viewer class="visor-producto"
+              src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb"
+              alt="Modelo 3D de muestra (temporal) para galleta de dinosaurio"
+              camera-controls auto-rotate ar shadow-intensity="1"
+            ></model-viewer>
           </div>
           <div class="contenido-tarjeta">
             <h3>galleta de dinosaurio</h3>
@@ -46,10 +50,11 @@
         </div>
         <div class="tarjeta">
           <div class="imagen-producto">
-            <img
-              src="https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?auto=format&fit=crop&w=600&q=80"
-              alt="Oreo"
-            />
+            <model-viewer class="visor-producto"
+              src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb"
+              alt="Modelo 3D de muestra (temporal) para galleta Oreo"
+              camera-controls auto-rotate ar shadow-intensity="1"
+            ></model-viewer>
           </div>
           <div class="contenido-tarjeta">
             <h3>Oreo</h3>

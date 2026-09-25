@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cupcakes - Mi Dulce Rincón</title>
     <link rel="stylesheet" href="cupcake.css">
+    <link rel="stylesheet" href="visor3d.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
 </head>
 <body>
     <section id="cupcakes">
@@ -13,8 +15,10 @@
     <div class="productos">
 
         <div class="tarjeta">
-            <img src="https://i.pinimg.com/originals/06/37/da/0637dadbd1c141d7db45f319bb661a3c.png"
-                 alt="Cupcake de chocolate">
+            <model-viewer class="visor-producto"
+                 src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb"
+                 alt="Modelo 3D de muestra (temporal) para Cupcake de chocolate"
+                 camera-controls auto-rotate ar shadow-intensity="1"></model-viewer>
             <h3> Chocolate</h3>
             <p>suave y esponjoso, con un delicioso sabor a chocolate y una cremosa decoración.</p>
             <h4>$5.000</h4>
@@ -22,8 +26,10 @@
         </div>
 
         <div class="tarjeta">
-            <img src="https://tse3.mm.bing.net/th/id/OIP.7Om6xbobYliX2mjoBJ4OCAHaDt?r=0&pid=Api&P=0&h=180"
-                 alt="Cupcake de vainilla">
+            <model-viewer class="visor-producto"
+                 src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb"
+                 alt="Modelo 3D de muestra (temporal) para Cupcake de vainilla"
+                 camera-controls auto-rotate ar shadow-intensity="1"></model-viewer>
             <h3> Vainilla</h3>
             <p>clasico, ligero y esponjoso, con un delicado sabor a vainilla con crema dulce .</p>
             <h4>$4.500</h4>
@@ -31,8 +37,10 @@
         </div>
 
         <div class="tarjeta">
-            <img src="https://tse2.mm.bing.net/th/id/OIP.FnNnkGp1mrtz98OZifnT4wHaFd?r=0&pid=Api&P=0&h=180"
-                 alt="Cupcake de fresa">
+            <model-viewer class="visor-producto"
+                 src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb"
+                 alt="Modelo 3D de muestra (temporal) para Cupcake de fresa"
+                 camera-controls auto-rotate ar shadow-intensity="1"></model-viewer>
             <h3> Fresa</h3>
             <p>dulce y suave, preparado con sabor a fresa y cubierto con una deliciona crema..</p>
             <h4>$5.000</h4>
@@ -40,7 +48,7 @@
         </div>
 
     </div>
-      <a class="button is -link" type="button" href="/index.html"><h3>inicio</h3></button>
+      <a class="button is -link" type="button" href="/index.html"><h3>inicio</h3></a>
 </section>
 
 </body>

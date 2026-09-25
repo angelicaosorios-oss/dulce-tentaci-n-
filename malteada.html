@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Malteadas - Mi Dulce Rincón</title>
     <link rel="stylesheet" href="malteadas.css">
+    <link rel="stylesheet" href="visor3d.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
 </head>
 <body>
 
@@ -17,8 +19,10 @@
         <div class="contenedor-malteadas">
 
             <div class="tarjeta-malteada">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjXX9XGBFk0l-zTp5jhzbBsYjc2eSEp1_EL2M3hhc-osx-ZlPmIhB3usr8&s=10" 
-                     alt="Malteada de Chocolate">
+                <model-viewer class="visor-producto"
+                     src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb"
+                     alt="Modelo 3D de muestra (temporal) para Malteada de Chocolate"
+                     camera-controls auto-rotate ar shadow-intensity="1"></model-viewer>
 
                 <div class="contenido-malteada">
                     <h3>Chocolate</h3>
@@ -32,8 +36,10 @@
             </div>
 
             <div class="tarjeta-malteada">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJuG6RSmV622QDcFccfw_7Kkcma_x6ABmNTSGI5B5IZSfdzpn0HRFs6TY&s=10" 
-                     alt="Malteada de Oreo">
+                <model-viewer class="visor-producto"
+                     src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb"
+                     alt="Modelo 3D de muestra (temporal) para Malteada de Oreo"
+                     camera-controls auto-rotate ar shadow-intensity="1"></model-viewer>
 
                 <div class="contenido-malteada">
                     <h3>Oreo</h3>
@@ -47,8 +53,10 @@
             </div>
 
             <div class="tarjeta-malteada">
-                <img src="https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=800&q=80" 
-                     alt="Malteada de Fresa">
+                <model-viewer class="visor-producto"
+                     src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb"
+                     alt="Modelo 3D de muestra (temporal) para Malteada de Fresa"
+                     camera-controls auto-rotate ar shadow-intensity="1"></model-viewer>
 
                 <div class="contenido-malteada">
                     <h3>Fresa</h3>

@@ -120,6 +120,14 @@ body {
     display: block;
 }
 
+.imagen-producto model-viewer {
+    display: block;
+    width: 100%;
+    height: 190px;
+    border-radius: 15px;
+    background-color: #fafafa;
+}
+
 
 .contenido-tarjeta a,
 .contenedor > a {

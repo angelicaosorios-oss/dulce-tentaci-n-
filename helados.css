@@ -58,6 +58,14 @@ section h2 {
     border-radius: 15px;
 }
 
+.tarjeta model-viewer {
+    display: block;
+    width: 100%;
+    height: 190px;
+    border-radius: 15px;
+    background-color: #fafafa;
+}
+
 /* Nombre del helado */
 .tarjeta h3 {
     font-size: 23px;

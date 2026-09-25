@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Helados - Mi Dulce Rincón</title>
     <link rel="stylesheet" href="helados.css">
+    <link rel="stylesheet" href="visor3d.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
 </head>
 <body>
 
@@ -14,8 +16,10 @@
         <div class="productos">
 
             <div class="tarjeta">
-                <img src="https://tse4.mm.bing.net/th/id/OIP.7RvsSpb4m7jw3jiSNof8aQHaFF?r=0&pid=Api&P=0&h=180"
-                     alt="Helado de chocolate">
+                <model-viewer class="visor-producto"
+                     src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb"
+                     alt="Modelo 3D de muestra (temporal) para Helado de chocolate"
+                     camera-controls auto-rotate ar shadow-intensity="1"></model-viewer>
 
                 <h3> Chocolate</h3>
                 <p>
@@ -29,8 +33,10 @@
             </div>
 
             <div class="tarjeta">
-                <img src="https://tse2.mm.bing.net/th/id/OIP.y9ZD6juJQat7oht-r_IWLQHaEs?r=0&pid=Api&P=0&h=180"
-                     alt="Helado de fresa">
+                <model-viewer class="visor-producto"
+                     src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb"
+                     alt="Modelo 3D de muestra (temporal) para Helado de fresa"
+                     camera-controls auto-rotate ar shadow-intensity="1"></model-viewer>
 
                 <h3> Fresa</h3>
 
@@ -45,8 +51,10 @@
             </div>
             
             <div class="tarjeta">
-                <img src="https://tse4.mm.bing.net/th/id/OIP.Lj2fmPZ1HfkLz_uXsRd6xwHaE6?r=0&pid=Api&P=0&h=180"
-                     alt="Helado de vainilla">
+                <model-viewer class="visor-producto"
+                     src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb"
+                     alt="Modelo 3D de muestra (temporal) para Helado de vainilla"
+                     camera-controls auto-rotate ar shadow-intensity="1"></model-viewer>
 
                 <h3> Vainilla</h3>
 
@@ -61,7 +69,7 @@
             </div>
 
         </div>
-         <a class="button is -link" type="button" href="/index.html"><h3>inicio</h3></button>
+         <a class="button is -link" type="button" href="/index.html"><h3>inicio</h3></a>
     </section>
 </body>
 </html>

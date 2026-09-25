@@ -1,0 +1,7 @@
+/* Estilos base compartidos por los visores 3D (model-viewer) */
+/* El tamaño de cada .visor-producto se define en el CSS propio de cada página, */
+/* igual que se hacía antes con las imágenes que reemplaza. */
+
+model-viewer.visor-producto {
+    --poster-color: transparent;
+}
