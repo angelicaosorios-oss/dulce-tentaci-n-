@@ -1,51 +1,44 @@
 
-// Necesita ../js/medios.js cargado antes (formatoPrecio, escaparHTML, crearMedio)
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-const COSTO_DOMICILIO = 5000;
-
-function leerCarrito() {
-    try {
-        return JSON.parse(localStorage.getItem("carrito")) || [];
-    } catch (error) {
-        return [];
-    }
+// FORMATO DE PRECIOS
+function formatoPrecio(numero) {
+    return "$" + Number(numero).toLocaleString("es-CO");
 }
 
-function guardarCarrito(carrito) {
+// GUARDAR CARRITO
+function guardarCarrito() {
     localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
-/**
- * AGREGAR PRODUCTOS
- * agregarAlCarrito(nombre, precio, archivo)            -> páginas fijas
- * agregarAlCarrito(nombre, precio, archivo, idProducto) -> productos de la base de datos
- * "archivo" puede ser una imagen o un modelo 3D .glb
- */
-function agregarAlCarrito(nombre, precio, archivo, idProducto) {
-    const carrito = leerCarrito();
-    const id = idProducto ? "bd-" + idProducto : nombre;
+// AGREGAR PRODUCTOS
+function agregarAlCarrito(id_producto, nombre, precio, imagen) {
+    carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-    const existente = carrito.find(producto => producto.id_producto === id);
+    let productoExistente = carrito.find(
+        producto => producto.id_producto === id_producto
+    );
 
-    if (existente) {
-        existente.cantidad++;
+    if (productoExistente) {
+        productoExistente.cantidad++;
     } else {
         carrito.push({
-            id_producto: id,
+            id_producto: id_producto,
             nombre: nombre,
             precio: Number(precio),
-            imagen: archivo || "",
+            imagen: imagen,
             cantidad: 1
         });
     }
 
-    guardarCarrito(carrito);
+    guardarCarrito();
     window.location.href = "../html/carrito.html";
 }
 
 // MOSTRAR PRODUCTOS
 function mostrarCarrito() {
-    const carrito = leerCarrito();
+    carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
     const lista = document.getElementById("lista-carrito");
     const carritoVacio = document.getElementById("carrito-vacio");
 
@@ -53,91 +46,123 @@ function mostrarCarrito() {
 
     lista.innerHTML = "";
 
-    if (carritoVacio) {
-        carritoVacio.style.display = carrito.length === 0 ? "block" : "none";
+    if (carrito.length === 0) {
+        if (carritoVacio) carritoVacio.style.display = "block";
+        calcularTotal();
+        return;
     }
 
+    if (carritoVacio) carritoVacio.style.display = "none";
+
     carrito.forEach((producto, indice) => {
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "producto-carrito";
+        lista.innerHTML += `
+            <div class="producto-carrito">
 
-        if (producto.imagen) {
-            tarjeta.appendChild(crearMedio(producto.imagen, null, { alt: producto.nombre }));
-        }
+                <model-viewer
+                    src="${producto.imagen}"
+                    alt="${producto.nombre}"
+                    camera-controls
+                    auto-rotate>
+                </model-viewer>
 
-        const info = document.createElement("div");
-        info.className = "info-producto";
-        info.innerHTML = `
-            <h3>${escaparHTML(producto.nombre)}</h3>
-            <p class="precio">${formatoPrecio(producto.precio)}</p>
-            <p>Subtotal: ${formatoPrecio(producto.precio * producto.cantidad)}</p>
-            <div class="controles-cantidad">
-                <button type="button" onclick="cambiarCantidad(${indice}, -1)">-</button>
-                <span class="numero-cantidad">${producto.cantidad}</span>
-                <button type="button" onclick="cambiarCantidad(${indice}, 1)">+</button>
-                <button type="button" class="btn-eliminar" onclick="eliminarProducto(${indice})">Eliminar</button>
+                <div class="info-producto">
+
+                    <h3>${producto.nombre}</h3>
+
+                    <p class="precio">
+                        ${formatoPrecio(producto.precio)}
+                    </p>
+
+                    <p>
+                        Subtotal:
+                        ${formatoPrecio(producto.precio * producto.cantidad)}
+                    </p>
+
+                    <div class="controles-cantidad">
+
+                        <button onclick="cambiarCantidad(${indice}, -1)">-</button>
+
+                        <span class="numero-cantidad">
+                            ${producto.cantidad}
+                        </span>
+
+                        <button onclick="cambiarCantidad(${indice}, 1)">+</button>
+
+                        <button class="btn-eliminar"
+                            onclick="eliminarProducto(${indice})">
+                            Eliminar
+                        </button>
+
+                    </div>
+                </div>
             </div>
         `;
-
-        tarjeta.appendChild(info);
-        lista.appendChild(tarjeta);
     });
 
-    calcularTotal(carrito);
+    calcularTotal();
 }
 
 // CAMBIAR CANTIDAD
 function cambiarCantidad(indice, cambio) {
-    const carrito = leerCarrito();
-
-    if (!carrito[indice]) return;
-
     carrito[indice].cantidad += cambio;
 
     if (carrito[indice].cantidad <= 0) {
         carrito.splice(indice, 1);
     }
 
-    guardarCarrito(carrito);
+    guardarCarrito();
     mostrarCarrito();
 }
 
 // ELIMINAR PRODUCTOS
 function eliminarProducto(indice) {
-    const carrito = leerCarrito();
     carrito.splice(indice, 1);
-    guardarCarrito(carrito);
+    guardarCarrito();
     mostrarCarrito();
 }
 
 // CALCULAR TOTAL
-// El domicilio se muestra como estimado: en contacto solo se cobra si eliges "Envío".
-function calcularTotal(carrito) {
-    const subtotal = carrito.reduce(
-        (total, producto) => total + producto.precio * producto.cantidad,
+function calcularTotal() {
+    let subtotal = carrito.reduce(
+        (total, producto) =>
+            total + producto.precio * producto.cantidad,
         0
     );
 
-    const domicilio = subtotal > 0 ? COSTO_DOMICILIO : 0;
+    let domicilio = subtotal > 0 ? 5000 : 0;
+    let total = subtotal + domicilio;
 
     const elementoSubtotal = document.getElementById("subtotal");
     const elementoDomicilio = document.getElementById("domicilio");
     const elementoTotal = document.getElementById("total");
 
-    if (elementoSubtotal) elementoSubtotal.textContent = formatoPrecio(subtotal);
-    if (elementoDomicilio) elementoDomicilio.textContent = formatoPrecio(domicilio);
-    if (elementoTotal) elementoTotal.textContent = formatoPrecio(subtotal + domicilio);
+    if (elementoSubtotal) {
+        elementoSubtotal.textContent = formatoPrecio(subtotal);
+    }
+
+    if (elementoDomicilio) {
+        elementoDomicilio.textContent = formatoPrecio(domicilio);
+    }
+
+    if (elementoTotal) {
+        elementoTotal.textContent = formatoPrecio(total);
+    }
 }
 
 // REALIZAR PEDIDO: IR A CONTACTO
 function realizarPedido() {
-    if (leerCarrito().length === 0) {
-        const carritoVacio = document.getElementById("carrito-vacio");
-        if (carritoVacio) carritoVacio.style.display = "block";
+    carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    if (carrito.length === 0) {
+        alert("Tu carrito está vacío.");
         return;
     }
 
     window.location.href = "../html/contacto.html";
 }
 
-document.addEventListener("DOMContentLoaded", mostrarCarrito);
+// INICIAR CARRITO
+document.addEventListener("DOMContentLoaded", function() {
+    carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    mostrarCarrito();
+});

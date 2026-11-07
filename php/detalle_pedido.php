@@ -1,36 +1,24 @@
 <?php
-// Registrar un producto dentro de un pedido (responde JSON).
-// Campos: id_pedido, id_producto, cantidad, subtotal
-require_once __DIR__ . "/conexion.php";
-require_once __DIR__ . "/utilidades.php";
+require("conexion.php");
 
-activarErroresJSON();
+if ($_SERVER["REQUEST_METHOD"] ==I "POST") {
+    $id_detalles = $_POST['id_detalles'];
+    $id_pedido = $_POST['id_pedido'];
+    $id_producto = $_POST['id_producto'];
+    $cantidad = $_POST['cantidad'];
+    $subtotal = $_POST['subtotal'];
+    
+$sql = "INSERT INTO detalles(id_detalles, id_pedido, id_producto, cantidad, subtotal)
+        VALUES ('$id_detalles', '$id_pedido', '$id_producto', '$cantidad', '$subtotal')";
+          
+if ($coon->query($sql) === TRUE) {
+    $mensaje = "registro guardado correctamente.";
+    $clase = "msg"
+}  else  {
+    $mensaje =" error: " . $coon->error;  //ejemplo. codigo duplicado
+}   $clase = "msg error";
+    
 
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    responderError("Método no permitido.", 405);
 }
 
-$idPedido = (int) ($_POST["id_pedido"] ?? 0);
-$idProducto = (int) ($_POST["id_producto"] ?? 0);
-$cantidad = (int) ($_POST["cantidad"] ?? 0);
-$subtotal = (float) ($_POST["subtotal"] ?? 0);
-
-if ($idPedido <= 0 || $idProducto <= 0 || $cantidad <= 0 || $subtotal <= 0) {
-    responderError("Datos del detalle incompletos.");
-}
-
-try {
-    $stmt = $conn->prepare(
-        "INSERT INTO detalle_pedido (id_pedido, id_producto, cantidad, subtotal) VALUES (?, ?, ?, ?)"
-    );
-    $stmt->bind_param("iiid", $idPedido, $idProducto, $cantidad, $subtotal);
-    $stmt->execute();
-} catch (mysqli_sql_exception $e) {
-    responderError("No se pudo guardar el detalle. ¿Existen el pedido y el producto?");
-}
-
-responderJSON([
-    "success" => true,
-    "message" => "Detalle guardado correctamente.",
-    "id_detalle" => $conn->insert_id,
-]);
+?>

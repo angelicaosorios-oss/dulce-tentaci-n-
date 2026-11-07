@@ -10,10 +10,6 @@
       rel="stylesheet"/>
 
     <link rel="stylesheet" href="../css/home.css" />
-    <script
-      type="module"
-      src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"
-    ></script>
   </head>
 
   <body>
@@ -21,9 +17,21 @@
       id="carouselExampleControls"
       class="carousel slide"
       data-bs-ride="carousel"
-      data-bs-touch="false"
     >
-      <div class="carousel-inner" id="carrusel-inner">
+      <style>
+        .carousel-item {
+          text-align: center;
+        }
+        .carousel-item img {
+          width: 70%;
+          height: 400px;
+          object-fit: cover;
+          margin: auto;
+          display: block;
+          border-radius: 10px;
+        }
+      </style>
+      <div class="carousel-inner">
         <div class="carousel-item active">
           <img
             src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200&q=80"
@@ -82,23 +90,47 @@
       </div>
     </section>
 <section class="destacados">
-      <h2>PRODUCTOS DESTACADOS</h2>
+    <h2>PRODUCTOS DESTACADOS</h2>
 
-      <!-- Se llena con lo que guardes en "Administrar home" -->
-      <div class="contenedor-productos" id="contenedor-destacados"></div>
-    </section>
+    <div class="contenedor-productos">
+
+        <div class="producto">
+            <img src="../img/postre1.jpg" alt="Postres">
+            <div>
+                <b>Deliciosos postres</b>
+                <p>Los favoritos de nuestros clientes</p>
+            </div>
+        </div>
+
+        <div class="producto">
+            <img src="../img/postre2.jpg" alt="Galletas">
+            <div>
+                <b>Galletas especiales</b>
+                <p>Perfectas para cualquier ocasión</p>
+            </div>
+        </div>
+
+        <div class="producto">
+            <img src="../img/postre3.jpg" alt="Promociones">
+            <div>
+                <b>Promociones</b>
+                <p>Disfruta nuestras ofertas</p>
+            </div>
+        </div>
+
+    </div>
+</section>
     <section class="productos">
       <h2>NUESTROS PRODUCTOS</h2>
 
-      <!-- Las 5 categorías fijas + las que crees en el administrador -->
-      <div class="contenedor-productos" id="contenedor-categorias">
+      <div class="contenedor-productos">
         <div class="producto">
           <img
             src="https://us.123rf.com/450wm/mikkiorso/mikkiorso2504/mikkiorso250430566/245635797-charming-pastel-milkshakes-with-floral-straws-and-ice-cubes-on-a-pink-background-for-custom-text.jpg?ver=6"
             alt="Malteada"
           />
 <br>
-          <a class="button is-link" href="../html/malteada.html" ><h3>Malteada</h3></a>
+          <a class="button is -link" type="button" href="../html/malteada.html" ><h3>Malteada</h3></a>
         </div>
 
         <div class="producto">
@@ -107,7 +139,7 @@
             alt="Cupcake"
           />
 <br>
-          <a class="button is-link" href="../html/cupcake.html"><h3>Cupcake</h3></a>
+          <a class="button is -link" type="button" href="../html/cupcake.html"><h3>Cupcake</h3></a>
         </div>
 
         <div class="producto">
@@ -116,7 +148,7 @@
             alt="Galletas"
           />
 <br>
-          <a class="button is-link" href="../html/galletas.html" ><h3>Galletas</h3></a>
+          <a class="button is -link" type="button" href="../html/galletas.html" ><h3>Galletas</h3></a>
         </div>
 
         <div class="producto">
@@ -126,7 +158,7 @@
           /> 
 
 <br>
-          <a class="button is-link" href="../html/Cheesecakes.html"><h3>Cheesecakes</h3></a>
+          <a class="button is -link" type="button" href="../html/Cheesecakes.html"><h3>Cheesecakes</h3></a>
         </div>
 
         <div class="producto">
@@ -135,16 +167,69 @@
             alt="Helado"
           />
 <br>
-          <a class="button is-link" href="../html/helados.html"><h3>Helado</h3></a>
+          <a class="button is -link" type="button" href="../html/helados.html"><h3>Helado</h3></button>
         </div>
       </div>
     </section>
-    <nav class="opciones-home" id="opciones-home">
-      <a href="../html/carrito.html" class="categoria">🛒 Mi carrito</a>
-      <a href="../html/inicio.html" class="cerrar" id="enlace-sesion">Iniciar sesión</a>
-    </nav>
+    <nav class="opciones-home">
+    <a href="../html/categoria.html" class="categoria">
+        Categorías
+    </a>
+
+    <a href="../html/inicio.html" class="cerrar">
+        ↪ Cerrar sesión
+    </a>
+</nav>
+        <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // CARGAR BANNER PRINCIPAL
+    const bannerGuardado = localStorage.getItem("bannerPrincipal");
+
+    if (bannerGuardado) {
+        const imagenBanner = document.querySelector(
+            "#carouselExampleControls .carousel-item:first-child img"
+        );
+
+        if (imagenBanner) {
+            imagenBanner.src = bannerGuardado;
+        }
+    }
+
+    // CARGAR PRODUCTOS DESTACADOS
+    const productosGuardados = JSON.parse(
+        localStorage.getItem("productosDestacados")
+    ) || [];
+
+    const tarjetas = document.querySelectorAll(
+        ".destacados .producto"
+    );
+
+    tarjetas.forEach(function (tarjeta, indice) {
+
+        const producto = productosGuardados[indice];
+
+        if (producto) {
+            const imagen = tarjeta.querySelector("img");
+            const nombre = tarjeta.querySelector("b");
+            const descripcion = tarjeta.querySelector("p");
+
+            if (imagen && producto.imagen) {
+                imagen.src = producto.imagen;
+            }
+
+            if (nombre && producto.nombre) {
+                nombre.textContent = producto.nombre;
+            }
+
+            if (descripcion && producto.descripcion) {
+                descripcion.textContent = producto.descripcion;
+            }
+        }
+    });
+
+});
+</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/medios.js"></script>
-    <script src="../js/home.js"></script>
   </body>
 </html>

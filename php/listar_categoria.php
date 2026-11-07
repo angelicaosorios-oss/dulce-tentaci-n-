@@ -1,18 +1,20 @@
 <?php
-require_once __DIR__ . "/conexion.php";
-require_once __DIR__ . "/utilidades.php";
+require("conexion.php");
 
-activarErroresJSON();
+header("Content-Type: application/json; charset=UTF-8");
 
-$resultado = $conn->query(
-    "SELECT c.id_categoria, c.nombre_categoria, c.imagen, c.tipo_media,
-            COUNT(p.id_producto) AS total_productos
-     FROM categoria c
-     LEFT JOIN producto p ON p.id_categoria = c.id_categoria
-     GROUP BY c.id_categoria
-     ORDER BY c.nombre_categoria"
-);
+$sql = "SELECT id_categoria, nombre_categoria FROM categoria";
+$resultado = $conn->query($sql);
+
+$categorias = [];
+
+if ($resultado) {
+    while ($fila = $resultado->fetch_assoc()) {
+        $categorias[] = $fila;
+    }
+}
+
+echo json_encode($categorias);
 
 $conn->close();
-
-responderJSON($resultado->fetch_all(MYSQLI_ASSOC));
+?>

@@ -1,3 +1,10 @@
+document.addEventListener("DOMContentLoaded", function() {
+
+    const formulario = document.getElementById("formulario-contacto");
+
+    console.log("Formulario encontrado:", formulario);
+
+});
 const mensaje = document.getElementById("mensaje");
 const iconoMensaje = document.getElementById("icono-mensaje");
 const tituloMensaje = document.getElementById("titulo-mensaje");

@@ -1,50 +1,83 @@
+
 <?php
-// Crear producto desde html/crearproductos.html
-// Acepta imagen (JPG, PNG, WEBP, GIF) o modelo 3D (.glb); el tipo se reconoce solo.
-require_once __DIR__ . "/conexion.php";
-require_once __DIR__ . "/utilidades.php";
+require("conexion.php");
 
-function volver(string $parametros): void
-{
-    header("Location: ../html/crearproductos.html?" . $parametros);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $nombre = trim($_POST["nombre_producto"]);
+    $descripcion = trim($_POST["descripcion"]);
+    $precio = $_POST["precio"];
+    $id_categoria = $_POST["id_categoria"];
+
+    // Validar los datos
+    if ($nombre == "" || $descripcion == "" || $precio <= 0 || $id_categoria <= 0) {
+        header("Location: ../html/crearproductos.html?error=1");
+        exit();
+    }
+
+    // Preparar la carpeta para las imágenes
+    $carpeta = __DIR__ . "/../img/productos/";
+
+    if (!is_dir($carpeta)) {
+        mkdir($carpeta, 0777, true);
+    }
+
+    $imagen = null;
+
+    // Comprobar si se seleccionó una imagen
+    if (isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] == 0) {
+
+        $tipo = mime_content_type($_FILES["imagen"]["tmp_name"]);
+        $tiposPermitidos = ["image/jpeg", "image/png"];
+
+        if (!in_array($tipo, $tiposPermitidos) ||
+            $_FILES["imagen"]["size"] > 5 * 1024 * 1024) {
+            header("Location: ../html/crearproductos.html?error=1");
+            exit();
+        }
+
+        $extension = ($tipo == "image/png") ? ".png" : ".jpg";
+        $nombreImagen = uniqid("producto_") . $extension;
+
+        if (!move_uploaded_file(
+            $_FILES["imagen"]["tmp_name"],
+            $carpeta . $nombreImagen
+        )) {
+            header("Location: ../html/crearproductos.html?error=1");
+            exit();
+        }
+
+        $imagen = "../img/productos/" . $nombreImagen;
+    }
+
+    // Guardar el producto en MySQL
+    $sql = "INSERT INTO producto
+            (nombre_producto, precio, id_categoria, descripcion, imagen)
+            VALUES (?, ?, ?, ?, ?)";
+
+    $stmt = $conn->prepare($sql);
+
+    if ($stmt) {
+        $stmt->bind_param(
+            "sdiss",
+            $nombre,
+            $precio,
+            $id_categoria,
+            $descripcion,
+            $imagen
+        );
+
+        if ($stmt->execute()) {
+            header("Location: ../html/crearproductos.html?registro=correcto");
+            exit();
+        }
+    }
+
+    header("Location: ../html/crearproductos.html?error=1");
     exit();
-}
 
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+} else {
     header("Location: ../html/crearproductos.html");
     exit();
 }
-
-requerirSesionRedireccion();
-
-$nombre = textoPost("nombre_producto", 100);
-$descripcion = textoPost("descripcion", 2000);
-$precio = (float) ($_POST["precio"] ?? 0);
-$idCategoria = (int) ($_POST["id_categoria"] ?? 0);
-
-if ($nombre === "" || $descripcion === "" || $precio <= 0 || $idCategoria <= 0) {
-    volver("error=1");
-}
-
-try {
-    $archivo = guardarArchivoSubido("imagen", "productos");
-} catch (RuntimeException $e) {
-    volver("error=archivo&detalle=" . urlencode($e->getMessage()));
-}
-
-$ruta = $archivo["ruta"] ?? null;
-$tipo = $archivo["tipo"] ?? null;
-
-try {
-    $stmt = $conn->prepare(
-        "INSERT INTO producto (nombre_producto, precio, id_categoria, descripcion, imagen, tipo_media)
-         VALUES (?, ?, ?, ?, ?, ?)"
-    );
-    $stmt->bind_param("sdisss", $nombre, $precio, $idCategoria, $descripcion, $ruta, $tipo);
-    $stmt->execute();
-} catch (mysqli_sql_exception $e) {
-    eliminarArchivoSubido($ruta, "productos");
-    volver("error=1");
-}
-
-volver("registro=correcto");
+?>
