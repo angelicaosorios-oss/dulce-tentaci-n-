@@ -44,9 +44,13 @@ formulario.addEventListener("submit", async function(event) {
     try {
 
         // PRIMERO: GUARDAR LOS DATOS EN MYSQL
+        // Enviamos también los productos del carrito para guardar el pedido
+        const datosFormulario = new FormData(formulario);
+        datosFormulario.append("carrito", JSON.stringify(carrito));
+
         const respuesta = await fetch("../php/contacto.php", {
             method: "POST",
-            body: new FormData(formulario)
+            body: datosFormulario
         });
 
         const resultado = await respuesta.json();
@@ -118,7 +122,8 @@ formulario.addEventListener("submit", async function(event) {
             "https://wa.me/" + numeroWhatsApp +
             "?text=" + encodeURIComponent(mensajeWhatsApp);
 
-        // QUINTO: ABRIR WHATSAPP
+        // QUINTO: VACIAR EL CARRITO (el pedido ya quedó guardado) Y ABRIR WHATSAPP
+        localStorage.removeItem("carrito");
         window.location.href = url;
 
     } catch (error) {

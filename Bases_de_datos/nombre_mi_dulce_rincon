@@ -69,3 +69,28 @@ CREATE TABLE usuarios (
 
 -- Columna para la imagen de cada categoría (ejecutar una sola vez)
 ALTER TABLE categoria ADD imagen VARCHAR(255) NULL;
+
+-- Tablas para guardar los pedidos del carrito (ejecutar una sola vez)
+-- OJO: borra las tablas pedido y detalle_pedido si ya existían
+DROP TABLE IF EXISTS detalle_pedido;
+DROP TABLE IF EXISTS pedido;
+
+CREATE TABLE pedido (
+    id_pedido INT AUTO_INCREMENT PRIMARY KEY,
+    id_contacto INT NOT NULL,
+    fecha DATETIME NOT NULL,
+    subtotal DECIMAL(10, 2) NOT NULL,
+    domicilio DECIMAL(10, 2) NOT NULL,
+    total DECIMAL(10, 2) NOT NULL
+);
+
+CREATE TABLE detalle_pedido (
+    id_detalle INT AUTO_INCREMENT PRIMARY KEY,
+    id_pedido INT NOT NULL,
+    id_producto INT NULL,
+    nombre_producto VARCHAR(100) NOT NULL,
+    precio DECIMAL(10, 2) NOT NULL,
+    cantidad INT NOT NULL,
+    subtotal DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido)
+);

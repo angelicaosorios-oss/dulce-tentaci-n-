@@ -47,9 +47,57 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     );
 
     if ($stmt->execute()) {
+
+        // GUARDAR EL PEDIDO CON LOS PRODUCTOS DEL CARRITO
+        $id_contacto = $conn->insert_id;
+        $carrito = json_decode($_POST['carrito'] ?? '[]', true) ?: [];
+
+        $subtotal = 0;
+        foreach ($carrito as $producto) {
+            $subtotal += $producto['precio'] * $producto['cantidad'];
+        }
+
+        $domicilio = ($forma_entrega == "Envio") ? 5000 : 0;
+        $total = $subtotal + $domicilio;
+
+        $sqlPedido = "INSERT INTO pedido (id_contacto, fecha, subtotal, domicilio, total)
+                      VALUES (?, NOW(), ?, ?, ?)";
+        $stmtPedido = $conn->prepare($sqlPedido);
+
+        if (!$stmtPedido) {
+            echo json_encode([
+                "success" => false,
+                "message" => "No se pudo guardar el pedido. Revisa que exista la tabla pedido."
+            ]);
+            exit();
+        }
+
+        $stmtPedido->bind_param("iddd", $id_contacto, $subtotal, $domicilio, $total);
+        $stmtPedido->execute();
+        $id_pedido = $conn->insert_id;
+
+        // Un registro por cada producto del carrito
+        $sqlDetalle = "INSERT INTO detalle_pedido
+                       (id_pedido, id_producto, nombre_producto, precio, cantidad, subtotal)
+                       VALUES (?, ?, ?, ?, ?, ?)";
+        $stmtDetalle = $conn->prepare($sqlDetalle);
+
+        foreach ($carrito as $producto) {
+            // Los productos de las páginas fijas (galletas, helados...) no tienen id en la base de datos
+            $id_producto = is_numeric($producto['id_producto']) ? (int) $producto['id_producto'] : null;
+            $nombre_producto = $producto['nombre'];
+            $precio = $producto['precio'];
+            $cantidad = (int) $producto['cantidad'];
+            $subtotal_producto = $precio * $cantidad;
+
+            $stmtDetalle->bind_param("iisdid", $id_pedido, $id_producto, $nombre_producto,
+                                     $precio, $cantidad, $subtotal_producto);
+            $stmtDetalle->execute();
+        }
+
         echo json_encode([
             "success" => true,
-            "message" => "Datos guardados correctamente."
+            "message" => "Pedido guardado correctamente."
         ]);
     } else {
         echo json_encode([

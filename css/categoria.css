@@ -366,7 +366,7 @@ button {
 .categoria-registrada small {
     color: #c8757a;
 }
-/* Imagen y botón eliminar de cada categoría */
+/* Imagen de cada categoría */
 .imagen-categoria {
     width: 60px;
     height: 60px;
@@ -374,17 +374,6 @@ button {
     border-radius: 50%;
     float: left;
     margin-right: 15px;
-}
-
-.boton-eliminar {
-    display: block;
-    margin-top: 10px;
-    background: #d9534f;
-    color: white;
-    border: none;
-    padding: 6px 15px;
-    border-radius: 15px;
-    cursor: pointer;
 }
 
 .categoria-registrada {

@@ -35,32 +35,6 @@ if (parametros.get("error") === "imagen") {
     mostrarMensaje("🖼️", "Falta la imagen", "Selecciona una imagen JPG o PNG de máximo 5 MB.");
 }
 
-if (parametros.get("eliminado") === "correcto") {
-    mostrarMensaje("🗑️", "¡Categoría eliminada!", "La categoría se eliminó correctamente.");
-}
-
-if (parametros.get("error") === "productos") {
-    mostrarMensaje("⚠️", "No se puede eliminar", "Esta categoría todavía tiene productos. Elimina o cambia esos productos primero.");
-}
-
-
-// ELIMINAR CATEGORÍA
-function eliminarCategoria(id, nombre) {
-    if (!confirm("¿Seguro que quieres eliminar la categoría \"" + nombre + "\"?")) return;
-
-    const formulario = document.createElement("form");
-    formulario.method = "POST";
-    formulario.action = "../php/categoria.php";
-
-    formulario.innerHTML = `
-        <input type="hidden" name="eliminar" value="1">
-        <input type="hidden" name="id_categoria" value="${id}">
-    `;
-
-    document.body.appendChild(formulario);
-    formulario.submit();
-}
-
 
 // CARGAR CATEGORÍAS DESDE LA BASE DE DATOS
 async function cargarCategorias() {
@@ -102,17 +76,8 @@ async function cargarCategorias() {
                 elemento.appendChild(imagen);
             }
 
-            const botonEliminar = document.createElement("button");
-            botonEliminar.type = "button";
-            botonEliminar.className = "boton-eliminar";
-            botonEliminar.textContent = "Eliminar";
-            botonEliminar.onclick = function () {
-                eliminarCategoria(categoria.id_categoria, categoria.nombre_categoria);
-            };
-
             elemento.appendChild(nombre);
             elemento.appendChild(codigo);
-            elemento.appendChild(botonEliminar);
 
             lista.appendChild(elemento);
         });

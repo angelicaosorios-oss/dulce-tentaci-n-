@@ -4,47 +4,6 @@ require("conexion.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // ELIMINAR CATEGORÍA
-    if (isset($_POST["eliminar"])) {
-
-        $id_categoria = (int) $_POST["id_categoria"];
-
-        // No se puede eliminar si todavía tiene productos
-        $consulta = $conn->prepare("SELECT COUNT(*) FROM producto WHERE id_categoria = ?");
-        $consulta->bind_param("i", $id_categoria);
-        $consulta->execute();
-        $consulta->bind_result($cantidad);
-        $consulta->fetch();
-        $consulta->close();
-
-        if ($cantidad > 0) {
-            header("Location: ../html/categoria.html?error=productos");
-            exit();
-        }
-
-        // Buscar la imagen para borrarla también
-        $consulta = $conn->prepare("SELECT imagen FROM categoria WHERE id_categoria = ?");
-        $consulta->bind_param("i", $id_categoria);
-        $consulta->execute();
-        $consulta->bind_result($imagen);
-        $consulta->fetch();
-        $consulta->close();
-
-        $stmt = $conn->prepare("DELETE FROM categoria WHERE id_categoria = ?");
-        $stmt->bind_param("i", $id_categoria);
-
-        if ($stmt->execute()) {
-            if ($imagen && file_exists(__DIR__ . "/" . $imagen)) {
-                unlink(__DIR__ . "/" . $imagen);
-            }
-
-            header("Location: ../html/categoria.html?eliminado=correcto");
-        } else {
-            header("Location: ../html/categoria.html?error=1");
-        }
-        exit();
-    }
-
     // CREAR CATEGORÍA
     $nombre_categoria = trim($_POST["nombre_categoria"] ?? "");
 

@@ -13,6 +13,13 @@ function guardarCarrito() {
 
 // AGREGAR PRODUCTOS
 function agregarAlCarrito(id_producto, nombre, precio, imagen) {
+    // Las páginas de galletas, helados, etc. envían solo 3 datos: (nombre, precio, imagen)
+    if (imagen === undefined) {
+        imagen = precio;
+        precio = nombre;
+        nombre = id_producto;
+    }
+
     carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
     let productoExistente = carrito.find(
