@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Carrito | Mi Repostería</title>
+
+    <link rel="stylesheet" href="carrito.css">
+</head>
+
+<body>
+
+    <header class="encabezado">
+
+        <h1> Mi carrito</h1>
+
+        <a href="productos.html" class="seguir-comprando">
+         
+        </a>
+
+    </header>
+
+    <main class="contenedor">
+
+        <section class="productos-carrito">
+
+            <h2>Productos seleccionados</h2>
+
+            <div id="lista-carrito"></div>
+
+        </section>
+
+
+
+        <aside class="resumen">
+
+            <h2>Resumen del pedido</h2>
+
+            <div class="linea">
+                <span>Subtotal</span>
+                <span id="subtotal">$0</span>
+            </div>
+
+            <div class="linea">
+                <span>Domicilio</span>
+                <span id="domicilio">$0</span>
+            </div>
+
+            <hr>
+
+            <div class="total">
+                <span>Total</span>
+                <span id="total">$0</span>
+            </div>
+
+            <button class="btn-whatsapp" onclick="realizarPedido()">
+                 Realizar pedido
+            </button>
+
+        </aside>
+
+    </main>
+
+    <div id="carrito-vacio" class="carrito-vacio">
+
+        <div class="icono-carrito">
+            
+        </div>
+
+        <h2>Tu carrito está vacío</h2>
+
+        <p>
+            Todavía no has agregado ningún producto.
+        </p>
+
+        <a href="index.html">
+            Ver productos
+        </a>
+
+    </div>
+
+
+    <script src="/carrito.js"></script>
+
+</body>
+
+</html>

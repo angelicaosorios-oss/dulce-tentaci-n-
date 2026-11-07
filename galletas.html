@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Galletas Mi Dulce Rincón</title>
+    <link rel="stylesheet" href="galletas.css" />
+    <link rel="stylesheet" href="visor3d.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+  </head>
+  <body>
+    <section class="presentacion">
+      <div class="texto-presentacion"><h1>Nuestras Galletas</h1></div>
+    </section>
+    <main class="contenedor">
+      <div class="productos">
+        <div class="tarjeta">
+          <div class="imagen-producto">
+            <model-viewer class="visor-producto"
+              src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb"
+              alt="Modelo 3D de muestra (temporal) para Galleta de Chocolate"
+              camera-controls auto-rotate rotation-per-second="60deg" ar shadow-intensity="1"
+            ></model-viewer>
+          </div>
+          <div class="contenido-tarjeta">
+            <h3>Galleta de Chocolate</h3>
+            <p>Galleta suave con deliciosos trozos de chocolate.</p>
+            <span class="precio">$5.000</span>
+            <a class="button is -link" type="button" href="/carrito.html">
+              <h3>Agregar al carrito</h3>
+            </a>
+          </div>
+        </div>
+        <div class="tarjeta">
+          <div class="imagen-producto">
+            <model-viewer class="visor-producto"
+              src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb"
+              alt="Modelo 3D de muestra (temporal) para galleta de dinosaurio"
+              camera-controls auto-rotate rotation-per-second="60deg" ar shadow-intensity="1"
+            ></model-viewer>
+          </div>
+          <div class="contenido-tarjeta">
+            <h3>galleta de dinosaurio</h3>
+            <p>Galleta de red velvet con un sabor dulce y especial.</p>
+            <span class="precio">$5.500</span>
+            <a class="button is -link" type="button" href="/carrito.html">
+              <h3>Agregar al carrito</h3>
+            </a>
+          </div>
+        </div>
+        <div class="tarjeta">
+          <div class="imagen-producto">
+            <model-viewer class="visor-producto"
+              src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb"
+              alt="Modelo 3D de muestra (temporal) para galleta Oreo"
+              camera-controls auto-rotate rotation-per-second="60deg" ar shadow-intensity="1"
+            ></model-viewer>
+          </div>
+          <div class="contenido-tarjeta">
+            <h3>Oreo</h3>
+            <p>
+              Deliciosa galleta con sabor a Oreo, perfecta para los amantes del
+              chocolate.
+            </p>
+            <span class="precio">$5.000</span>
+            <a class="button is -link" type="button" href="/carrito.html">
+              <h3>Agregar al carrito</h3>
+            </a>
+          </div>
+        </div>
+      </div>
+      <a class="button is -link" type="button" href="/index.html">
+        <h3>inicio</h3>
+      </a>
+    </main>
+  </body>
+</html>

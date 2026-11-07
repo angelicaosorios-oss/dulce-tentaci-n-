@@ -1,0 +1,353 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+
+    background: linear-gradient(
+        135deg,
+        #ffd6e5,
+        #f8b6ce
+    );
+
+    color: #333;
+}
+
+.encabezado {
+    width: 90%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    padding: 30px 0 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.encabezado h1 {
+    margin: 0;
+
+    font-size: 38px;
+
+    color: #5b2639;
+}
+
+.seguir-comprando {
+    text-decoration: none;
+
+    background-color: white;
+
+    color: #5b2639;
+
+    padding: 12px 22px;
+
+    border-radius: 25px;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+.seguir-comprando:hover {
+    background-color: #5b2639;
+
+    color: white;
+}
+
+.contenedor {
+    width: 90%;
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns: 2fr 1fr;
+
+    gap: 30px;
+
+    padding-bottom: 40px;
+}
+
+.productos-carrito {
+
+    background-color: rgba(255, 255, 255, 0.75);
+
+    padding: 25px;
+
+    border-radius: 25px;
+}
+
+.productos-carrito h2 {
+    margin-top: 0;
+
+    color: #5b2639;
+}
+
+.producto-carrito {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    background-color: white;
+
+    padding: 15px;
+
+    margin-bottom: 15px;
+
+    border-radius: 18px;
+
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.producto-carrito img {
+
+    width: 110px;
+
+    height: 100px;
+
+    object-fit: cover;
+
+    border-radius: 15px;
+}
+.info-producto {
+
+    flex: 1;
+}
+
+.info-producto h3 {
+
+    margin: 0 0 8px;
+
+    color: #5b2639;
+
+    font-size: 20px;
+}
+
+.precio {
+
+    font-weight: bold;
+
+    color: #d45b82;
+
+    font-size: 18px;
+}
+.controles-cantidad {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.controles-cantidad button {
+
+    width: 32px;
+
+    height: 32px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background-color: #f3a8c2;
+
+    color: white;
+
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+.controles-cantidad button:hover {
+
+    background-color: #d45b82;
+}
+
+.numero-cantidad {
+
+    font-weight: bold;
+
+    min-width: 20px;
+
+    text-align: center;
+}
+
+.btn-eliminar {
+
+    border: none;
+
+    background: none;
+
+    color: #d45b82;
+
+    font-size: 22px;
+
+    cursor: pointer;
+}
+
+.btn-eliminar:hover {
+
+    color: #9e274f;
+}
+
+.resumen {
+
+    background-color: white;
+
+    padding: 25px;
+
+    border-radius: 25px;
+
+    height: fit-content;
+
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.resumen h2 {
+
+    margin-top: 0;
+
+    color: #5b2639;
+}
+
+.linea {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin: 18px 0;
+
+    font-size: 17px;
+}
+
+hr {
+
+    border: none;
+
+    border-top: 1px solid #ddd;
+}
+.total {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    color: #5b2639;
+
+    margin: 20px 0;
+}
+
+.btn-whatsapp {
+
+    width: 100%;
+
+    border: none;
+
+    padding: 15px;
+
+    border-radius: 30px;
+
+    background-color: #e8789e;
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.btn-whatsapp:hover {
+
+    background-color: #c9557c;
+}
+
+.carrito-vacio {
+
+    display: none;
+
+    text-align: center;
+
+    padding: 70px 20px;
+}
+
+.icono-carrito {
+
+    font-size: 70px;
+}
+
+.carrito-vacio h2 {
+
+    color: #5b2639;
+}
+
+.carrito-vacio p {
+
+    color: #666;
+}
+
+.carrito-vacio a {
+
+    display: inline-block;
+
+    margin-top: 10px;
+
+    padding: 12px 25px;
+
+    border-radius: 25px;
+
+    text-decoration: none;
+
+    background-color: #e8789e;
+
+    color: white;
+
+    font-weight: bold;
+}
+
+@media (max-width: 750px) {
+
+    .encabezado {
+
+        flex-direction: column;
+
+        gap: 15px;
+
+        text-align: center;
+    }
+
+    .contenedor {
+
+        grid-template-columns: 1fr;
+    }
+
+    .producto-carrito {
+
+        flex-wrap: wrap;
+    }
+
+    .producto-carrito img {
+
+        width: 90px;
+
+        height: 90px;
+    }
+
+}

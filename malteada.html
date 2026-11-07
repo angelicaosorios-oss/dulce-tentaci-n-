@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malteadas - Mi Dulce Rincón</title>
+    <link rel="stylesheet" href="malteadas.css">
+    <link rel="stylesheet" href="visor3d.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+</head>
+<body>
+
+    <section class="seccion-malteadas">
+
+        <div class="titulo-malteadas">
+            <h2>Nuestras Malteadas</h2>
+        </div>
+
+        <div class="contenedor-malteadas">
+
+            <div class="tarjeta-malteada">
+                <model-viewer class="visor-producto"
+                     src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb"
+                     alt="Modelo 3D de muestra (temporal) para Malteada de Chocolate"
+                     camera-controls auto-rotate rotation-per-second="60deg" ar shadow-intensity="1"></model-viewer>
+
+                <div class="contenido-malteada">
+                    <h3>Chocolate</h3>
+                    <p>Deliciosa malteada de chocolate, cremosa y llena de sabor con pequeños trosos de chocolate.</p>
+                    <span>$10.000</span>
+
+                    <a class="button is -link" type="button" href="/carrito.html">
+                        <h3>Agregar al carrito</h3>
+                    </a>
+                </div>
+            </div>
+
+            <div class="tarjeta-malteada">
+                <model-viewer class="visor-producto"
+                     src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb"
+                     alt="Modelo 3D de muestra (temporal) para Malteada de Oreo"
+                     camera-controls auto-rotate rotation-per-second="60deg" ar shadow-intensity="1"></model-viewer>
+
+                <div class="contenido-malteada">
+                    <h3>Oreo</h3>
+                    <p>Una malteada cremosa con el delicioso sabor de las galletas Oreo con pequeños trosos de galleta que le da un toque mas dulce.</p>
+                    <span>$11.000</span>
+
+                    <a class="button is -link" type="button" href="/carrito.html">
+                        <h3>Agregar al carrito</h3>
+                    </a>
+                </div>
+            </div>
+
+            <div class="tarjeta-malteada">
+                <model-viewer class="visor-producto"
+                     src="./modelos3d/malteada-fresa.glb"
+                     alt="Modelo 3D de muestra (temporal) para Malteada de Fresa"
+                     camera-controls auto-rotate rotation-per-second="60deg" ar shadow-intensity="1"></model-viewer>
+
+                <div class="contenido-malteada">
+                    <h3>Fresa</h3>
+                    <p>Suave y refrescante malteada de fresa con un sabor delicioso y con pequeños trosos de fresa.</p>
+                    <span>$10.000</span>
+
+                    <a class="button is -link" type="button" href="/carrito.html">
+                        <h3>Agregar al carrito</h3>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="boton-inicio">
+            <a class="button is -link" type="button" href="/index.html">
+                <h3>inicio</h3>
+            </a>
+        </div>
+
+    </section>
+
+</body>
+</html>
