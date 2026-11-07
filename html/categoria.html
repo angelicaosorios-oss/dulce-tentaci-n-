@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Dulce Rincón - Categorías</title>
+    <link rel="stylesheet" href="../css/categoria.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">
+            <b>Mi Dulce Rincón</b>
+            <small>Administración</small>
+        </div>
+
+        <nav>
+            <a href="../html/index.html">Productos</a>
+            <a href="../html/crearproductos.html" >Crear producto</a>
+            
+        </nav>
+
+        <a href="../html/inicio.html" class="cerrar">↪ Cerrar sesión</a>
+    </aside>
+
+    <main class="contenido">
+
+        <h1>CATEGORÍAS</h1>
+
+        <section class="crear">
+            <h2>Crear categoría</h2>
+            <p>Agrega una nueva categoría para tus productos.</p>
+
+            <form action="../php/categoria.php" method="POST">
+
+                <label for="nombreCategoria">
+                    Nombre de la categoría:
+                </label>
+
+                <input
+                    type="text"
+                    id="nombreCategoria"
+                    name="nombre_categoria"
+                    placeholder="Ej. Postres, Galletas..."
+                    required
+                >
+
+                <button type="submit">Guardar categoría</button>
+
+            </form>
+        </section>
+
+        <section class="crear">
+            <h2>Categorías registradas</h2>
+            <p>Aquí puedes consultar las categorías que has guardado.</p>
+
+            <div id="lista-categorias">
+                Cargando categorías...
+            </div>
+        </section>
+
+        <section class="home">
+            <h2>Administrar home</h2>
+            <p>Personaliza el contenido principal de tu página.</p>
+
+            <div class="banner">
+                <div>
+                    <h3>Banner principal</h3>
+                    <p>Imagen que aparecerá en la parte superior.</p>
+                </div>
+
+               <button type="button" onclick="editarBanner()">Editar</button>
+            </div>
+
+            <h3 class="titulo">Productos destacados</h3>
+
+            <div class="productos">
+
+                <div class="producto">
+                  <input type="file" id="selectorImagen" accept="image/*" style="display: none;">
+                    <img src="img/postre1.jpg" alt="Producto">
+                    <div>
+                        <b>Deliciosos postres</b>
+                        <p>Los favoritos de nuestros clientes</p>
+                    </div>
+                    <button type="button" onclick="editarProducto(this)">Editar</button>
+                </div>
+
+                <div class="producto">
+                  <input type="file" id="selectorImagen" accept="image/*" style="display: none;">
+                    <img src="img/postre2.jpg" alt="Producto">
+                    <div>
+                        <b>Galletas especiales</b>
+                        <p>Perfectas para cualquier ocasión</p>
+                    </div>
+                    <button type="button" onclick="editarProducto(this)">Editar</button>
+                </div>
+
+                <div class="producto">
+                  <input type="file" id="selectorImagen" accept="image/*" style="display: none;">
+                    <img src="img/postre3.jpg" alt="Producto">
+                    <div>
+                        <b>Promociones</b>
+                        <p>Disfruta nuestras ofertas</p>
+                    </div>
+                    <button type="button" onclick="editarProducto(this)">Editar</button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <div id="mensaje" class="mensaje">
+        <div class="mensaje-contenido">
+            <span id="icono-mensaje"></span>
+            <h3 id="titulo-mensaje"></h3>
+            <p id="texto-mensaje"></p>
+            <button type="button" id="cerrar-mensaje">Aceptar</button>
+        </div>
+    </div>
+
+    <script src="../js/categoria.js"></script>
+
+</body>
+</html>
