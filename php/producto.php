@@ -77,7 +77,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit();
 
 } else {
-    header("Location: ../html/crearproductos.html");
-    exit();
+    // Si no es POST, devolvemos la lista de productos para mostrarlos en el index
+    header("Content-Type: application/json; charset=UTF-8");
+
+    $sql = "SELECT * FROM producto";
+    $resultado = $conn->query($sql);
+
+    $productos = [];
+
+    if ($resultado) {
+        while ($fila = $resultado->fetch_assoc()) {
+            $productos[] = $fila;
+        }
+    }
+
+    echo json_encode($productos);
+    $conn->close();
 }
 ?>

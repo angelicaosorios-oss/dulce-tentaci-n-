@@ -77,10 +77,31 @@ async function cargarCategorias() {
 }
 
 
-// EDITAR BANNER PRINCIPAL
-function editarBanner() {
-    const selector = document.createElement("input");
+// CARRUSEL DEL INICIO
+// Imágenes que trae el index si todavía no se ha agregado ninguna
+const imagenesIniciales = [
+    "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=1200&q=80",
+    "https://www.tortasytortas.com.co/images/virtuemart/product/resized/miloj%C3%B3n%20fresa-maracuy%C3%A1%20web_640x200.jpg"
+];
 
+function obtenerCarrusel() {
+    return JSON.parse(localStorage.getItem("carrusel")) || imagenesIniciales;
+}
+
+function guardarCarrusel(imagenes) {
+    try {
+        localStorage.setItem("carrusel", JSON.stringify(imagenes));
+        return true;
+    } catch (error) {
+        alert("La imagen es muy pesada. Intenta con una imagen más pequeña.");
+        return false;
+    }
+}
+
+// Abre el selector de archivos y devuelve la imagen elegida
+function elegirImagen(cuandoTermine) {
+    const selector = document.createElement("input");
     selector.type = "file";
     selector.accept = "image/*";
 
@@ -92,31 +113,75 @@ function editarBanner() {
         const lector = new FileReader();
 
         lector.onload = function (evento) {
-            const imagen = evento.target.result;
-
-            localStorage.setItem("bannerPrincipal", imagen);
-
-            let vista = document.getElementById("vista-banner");
-
-            if (!vista) {
-                vista = document.createElement("img");
-                vista.id = "vista-banner";
-                vista.style.width = "180px";
-                vista.style.height = "100px";
-                vista.style.objectFit = "cover";
-
-                document.querySelector(".banner").appendChild(vista);
-            }
-
-            vista.src = imagen;
-
-            alert("¡Banner actualizado correctamente!");
+            cuandoTermine(evento.target.result);
         };
 
         lector.readAsDataURL(archivo);
     };
 
     selector.click();
+}
+
+// Muestra las imágenes del carrusel en el panel
+function mostrarCarrusel() {
+    const lista = document.getElementById("lista-carrusel");
+
+    if (!lista) return;
+
+    lista.innerHTML = "";
+
+    obtenerCarrusel().forEach(function (imagen, indice) {
+        const elemento = document.createElement("div");
+        elemento.className = "producto imagen-carrusel";
+
+        elemento.innerHTML = `
+            <img src="${imagen}" alt="Imagen del carrusel">
+            <div><b>Imagen ${indice + 1}</b></div>
+            <button type="button" onclick="cambiarImagenCarrusel(${indice})">Cambiar</button>
+            <button type="button" onclick="eliminarImagenCarrusel(${indice})">Eliminar</button>
+        `;
+
+        lista.appendChild(elemento);
+    });
+}
+
+function agregarImagenCarrusel() {
+    elegirImagen(function (imagen) {
+        const imagenes = obtenerCarrusel();
+        imagenes.push(imagen);
+
+        if (guardarCarrusel(imagenes)) {
+            mostrarCarrusel();
+            alert("¡Imagen agregada al carrusel!");
+        }
+    });
+}
+
+function cambiarImagenCarrusel(indice) {
+    elegirImagen(function (imagen) {
+        const imagenes = obtenerCarrusel();
+        imagenes[indice] = imagen;
+
+        if (guardarCarrusel(imagenes)) {
+            mostrarCarrusel();
+            alert("¡Imagen cambiada!");
+        }
+    });
+}
+
+function eliminarImagenCarrusel(indice) {
+    const imagenes = obtenerCarrusel();
+
+    if (imagenes.length === 1) {
+        alert("El carrusel debe tener al menos una imagen.");
+        return;
+    }
+
+    if (!confirm("¿Seguro que quieres eliminar esta imagen?")) return;
+
+    imagenes.splice(indice, 1);
+    guardarCarrusel(imagenes);
+    mostrarCarrusel();
 }
 
 
@@ -178,7 +243,12 @@ function editarProducto(boton) {
             imagen: nuevaImagen
         };
 
-        localStorage.setItem("productosDestacados", JSON.stringify(productos));
+        try {
+            localStorage.setItem("productosDestacados", JSON.stringify(productos));
+        } catch (error) {
+            alert("La imagen es muy pesada. Intenta con una imagen más pequeña.");
+            return;
+        }
 
         titulo.textContent = nuevoNombre.trim();
         descripcion.textContent = nuevaDescripcion.trim();
@@ -203,7 +273,7 @@ function cargarCambios() {
         localStorage.getItem("productosDestacados")
     ) || [];
 
-    const elementos = document.querySelectorAll(".producto");
+    const elementos = document.querySelectorAll(".producto:not(.imagen-carrusel)");
 
     elementos.forEach((producto, indice) => {
         if (!productos[indice]) return;
@@ -213,25 +283,7 @@ function cargarCambios() {
         producto.querySelector("img").src = productos[indice].imagen;
     });
 
-    const bannerGuardado = localStorage.getItem("bannerPrincipal");
-
-    if (bannerGuardado) {
-        let vista = document.getElementById("vista-banner");
-
-        if (!vista && document.querySelector(".banner")) {
-            vista = document.createElement("img");
-            vista.id = "vista-banner";
-            vista.style.width = "180px";
-            vista.style.height = "100px";
-            vista.style.objectFit = "cover";
-
-            document.querySelector(".banner").appendChild(vista);
-        }
-
-        if (vista) {
-            vista.src = bannerGuardado;
-        }
-    }
+    mostrarCarrusel();
 }
 
 

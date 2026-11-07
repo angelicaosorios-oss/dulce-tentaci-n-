@@ -350,3 +350,29 @@ body {
     }
 }
 
+
+/* PRODUCTOS DE UNA CATEGORÍA (se muestran al dar clic en la categoría) */
+.tarjeta-producto {
+    background-color: white;
+    width: 220px;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.tarjeta-producto h4 {
+    color: #765348;
+    font-size: 18px;
+    margin: 10px 0 5px;
+}
+
+.tarjeta-producto p {
+    color: #5e4a45;
+    font-size: 14px;
+}
+
+.tarjeta-producto .precio {
+    display: block;
+    font-weight: bold;
+    color: #c56f76;
+    margin-bottom: 10px;
+}

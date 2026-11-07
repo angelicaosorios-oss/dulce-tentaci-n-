@@ -66,20 +66,22 @@
 
             <div class="banner">
                 <div>
-                    <h3>Banner principal</h3>
-                    <p>Imagen que aparecerá en la parte superior.</p>
+                    <h3>Carrusel</h3>
+                    <p>Imágenes que aparecen en la parte superior del inicio.</p>
                 </div>
 
-               <button type="button" onclick="editarBanner()">Editar</button>
+               <button type="button" onclick="agregarImagenCarrusel()">Agregar imagen</button>
             </div>
+
+            <!-- Aquí se muestran las imágenes del carrusel (js/categoria.js) -->
+            <div class="productos" id="lista-carrusel"></div>
 
             <h3 class="titulo">Productos destacados</h3>
 
             <div class="productos">
 
                 <div class="producto">
-                  <input type="file" id="selectorImagen" accept="image/*" style="display: none;">
-                    <img src="img/postre1.jpg" alt="Producto">
+                    <img src="../img/postre1.jpg" alt="Producto">
                     <div>
                         <b>Deliciosos postres</b>
                         <p>Los favoritos de nuestros clientes</p>
@@ -88,8 +90,7 @@
                 </div>
 
                 <div class="producto">
-                  <input type="file" id="selectorImagen" accept="image/*" style="display: none;">
-                    <img src="img/postre2.jpg" alt="Producto">
+                    <img src="../img/postre2.jpg" alt="Producto">
                     <div>
                         <b>Galletas especiales</b>
                         <p>Perfectas para cualquier ocasión</p>
@@ -98,8 +99,7 @@
                 </div>
 
                 <div class="producto">
-                  <input type="file" id="selectorImagen" accept="image/*" style="display: none;">
-                    <img src="img/postre3.jpg" alt="Producto">
+                    <img src="../img/postre3.jpg" alt="Producto">
                     <div>
                         <b>Promociones</b>
                         <p>Disfruta nuestras ofertas</p>

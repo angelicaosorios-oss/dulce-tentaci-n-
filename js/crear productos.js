@@ -8,7 +8,7 @@ async function cargarCategoriasProducto() {
     select.innerHTML = '<option value="">Cargando categorías...</option>';
 
     try {
-        const respuesta = await fetch("/dulcetentacion/php/listar_categoria.php");
+        const respuesta = await fetch("../php/listar_categoria.php");
 
         if (!respuesta.ok) {
             throw new Error("No se pudieron cargar las categorías");
