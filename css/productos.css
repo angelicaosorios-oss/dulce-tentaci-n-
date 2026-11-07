@@ -1,0 +1,114 @@
+/* Página genérica de categorías creadas en el administrador */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #fff5f8;
+    color: #5c3b43;
+}
+
+section {
+    padding: 60px 10%;
+    text-align: center;
+}
+
+section h2 {
+    font-size: 30px;
+    margin-bottom: 35px;
+    color: #9c3158;
+}
+
+.productos {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.aviso {
+    font-size: 18px;
+    color: #8b6b61;
+}
+
+.tarjeta {
+    background-color: white;
+    width: 280px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px #e8b9c7;
+    transition: 0.3s;
+}
+
+.tarjeta:hover {
+    transform: translateY(-8px);
+}
+
+.tarjeta img,
+.tarjeta model-viewer {
+    display: block;
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 15px;
+    background-color: #fafafa;
+}
+
+.tarjeta h3 {
+    font-size: 24px;
+    color: #d94f78;
+    margin: 15px;
+}
+
+.tarjeta p {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.tarjeta h4 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #7b2948;
+}
+
+.tarjeta a,
+.volver {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #d94f78;
+    color: white;
+    padding: 12px 22px;
+    border-radius: 25px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.volver {
+    margin-top: 30px;
+}
+
+.tarjeta a h3,
+.volver h3 {
+    color: white;
+    font-size: 16px;
+    margin: 0;
+}
+
+.tarjeta a:hover,
+.volver:hover {
+    background-color: #a83258;
+}
+
+@media (max-width: 700px) {
+    section {
+        padding: 40px 16px;
+    }
+
+    .productos {
+        flex-direction: column;
+        align-items: center;
+    }
+}

@@ -80,3 +80,13 @@ if (parametros.get("error") === "incorrecta") {
     );
 
 }
+
+if (parametros.get("error") === "sesion") {
+
+    mostrarMensaje(
+        "🔐",
+        "Inicia sesión",
+        "Debes iniciar sesión para entrar al panel de administración."
+    );
+
+}

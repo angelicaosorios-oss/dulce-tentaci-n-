@@ -1,117 +1,141 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Dulce Rincón - Categorías</title>
+    <title>Mi Dulce Rincón - Administración</title>
     <link rel="stylesheet" href="../css/categoria.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
 </head>
 <body>
 
     <aside class="sidebar">
         <div class="logo">
             <b>Mi Dulce Rincón</b>
-            <small>Administración</small>
+            <small id="saludo">Administración</small>
         </div>
 
         <nav>
-            <a href="../html/index.html">Productos</a>
-            <a href="../html/crearproductos.html" >Crear producto</a>
-            
+            <a href="../html/index.html">Ver tienda</a>
+            <a href="../html/categoria.html" class="activo">Categorías y home</a>
+            <a href="../html/crearproductos.html">Crear producto</a>
         </nav>
 
-        <a href="../html/inicio.html" class="cerrar">↪ Cerrar sesión</a>
+        <a href="../php/cerrar_sesion.php" class="cerrar">↪ Cerrar sesión</a>
     </aside>
 
     <main class="contenido">
 
-        <h1>CATEGORÍAS</h1>
+        <!-- ===== COLUMNA IZQUIERDA: CATEGORÍAS ===== -->
+        <div class="columna">
 
-        <section class="crear">
-            <h2>Crear categoría</h2>
-            <p>Agrega una nueva categoría para tus productos.</p>
+            <section class="crear">
+                <h2>Crear categoría</h2>
+                <p>La categoría aparecerá automáticamente en la página principal.</p>
 
-            <form action="../php/categoria.php" method="POST">
+                <form id="form-categoria">
+                    <label for="nombreCategoria">Nombre de la categoría:</label>
+                    <input type="text" id="nombreCategoria" name="nombre_categoria"
+                           placeholder="Ej. Tortas, Brownies..." maxlength="50" required>
 
-                <label for="nombreCategoria">
-                    Nombre de la categoría:
-                </label>
+                    <label class="espacio">Imagen o modelo 3D (opcional):</label>
+                    <div class="subir">
+                        <input type="file" id="archivoCategoria" name="archivo"
+                               accept="image/png,image/jpeg,image/webp,image/gif,.glb">
+                        <small id="tipo-categoria" class="tipo-detectado"></small>
+                        <div id="vista-categoria" class="vista-previa"></div>
+                    </div>
 
-                <input
-                    type="text"
-                    id="nombreCategoria"
-                    name="nombre_categoria"
-                    placeholder="Ej. Postres, Galletas..."
-                    required
-                >
+                    <button type="submit" class="guardar">Guardar categoría</button>
+                </form>
+            </section>
 
-                <button type="submit">Guardar categoría</button>
+            <section class="crear">
+                <h2>Categorías registradas</h2>
+                <p>Estas son las categorías que se muestran en el home.</p>
 
-            </form>
-        </section>
+                <div id="lista-categorias">Cargando categorías...</div>
+            </section>
 
-        <section class="crear">
-            <h2>Categorías registradas</h2>
-            <p>Aquí puedes consultar las categorías que has guardado.</p>
+        </div>
 
-            <div id="lista-categorias">
-                Cargando categorías...
-            </div>
-        </section>
-
+        <!-- ===== COLUMNA DERECHA: ADMINISTRAR HOME ===== -->
         <section class="home">
             <h2>Administrar home</h2>
-            <p>Personaliza el contenido principal de tu página.</p>
+            <p>Lo que cambies aquí se ve en la página principal.</p>
 
-            <div class="banner">
+            <div class="encabezado-bloque">
                 <div>
-                    <h3>Banner principal</h3>
-                    <p>Imagen que aparecerá en la parte superior.</p>
+                    <h3>Carrusel (banner principal)</h3>
+                    <p>Imágenes o modelos 3D que pasan en la parte superior.</p>
                 </div>
-
-               <button type="button" onclick="editarBanner()">Editar</button>
+                <button type="button" class="guardar" id="agregar-diapositiva">+ Agregar</button>
             </div>
+
+            <div id="lista-carrusel" class="productos">Cargando...</div>
 
             <h3 class="titulo">Productos destacados</h3>
 
-            <div class="productos">
-
-                <div class="producto">
-                  <input type="file" id="selectorImagen" accept="image/*" style="display: none;">
-                    <img src="img/postre1.jpg" alt="Producto">
-                    <div>
-                        <b>Deliciosos postres</b>
-                        <p>Los favoritos de nuestros clientes</p>
-                    </div>
-                    <button type="button" onclick="editarProducto(this)">Editar</button>
-                </div>
-
-                <div class="producto">
-                  <input type="file" id="selectorImagen" accept="image/*" style="display: none;">
-                    <img src="img/postre2.jpg" alt="Producto">
-                    <div>
-                        <b>Galletas especiales</b>
-                        <p>Perfectas para cualquier ocasión</p>
-                    </div>
-                    <button type="button" onclick="editarProducto(this)">Editar</button>
-                </div>
-
-                <div class="producto">
-                  <input type="file" id="selectorImagen" accept="image/*" style="display: none;">
-                    <img src="img/postre3.jpg" alt="Producto">
-                    <div>
-                        <b>Promociones</b>
-                        <p>Disfruta nuestras ofertas</p>
-                    </div>
-                    <button type="button" onclick="editarProducto(this)">Editar</button>
-                </div>
-
-            </div>
+            <div id="lista-destacados" class="productos">Cargando...</div>
         </section>
 
     </main>
 
+    <!-- ===== FORMULARIO PARA EDITAR CARRUSEL / DESTACADOS ===== -->
+    <div id="modal-medio" class="modal">
+        <form id="form-medio" class="modal-contenido">
+            <h2 id="modal-titulo">Editar</h2>
+
+            <input type="hidden" name="posicion" id="campo-posicion">
+            <input type="hidden" name="id_carrusel" id="campo-id-carrusel">
+
+            <label for="campo-titulo" id="etiqueta-titulo">Nombre</label>
+            <input type="text" name="titulo" id="campo-titulo" maxlength="100">
+
+            <label for="campo-descripcion">Descripción</label>
+            <input type="text" name="descripcion" id="campo-descripcion" maxlength="255">
+
+            <label class="espacio">¿Qué vas a mostrar?</label>
+            <div class="opciones-tipo">
+                <label class="opcion">
+                    <input type="radio" name="tipo" value="imagen" checked> 🖼️ Imagen
+                </label>
+                <label class="opcion">
+                    <input type="radio" name="tipo" value="modelo"> 🧊 Modelo 3D (.glb)
+                </label>
+            </div>
+
+            <div class="subir">
+                <input type="file" name="archivo" id="campo-archivo">
+                <small id="tipo-detectado" class="tipo-detectado"></small>
+                <div id="vista-medio" class="vista-previa"></div>
+            </div>
+
+            <!-- Campos según el tipo -->
+            <label for="campo-alt" id="etiqueta-alt">Texto alternativo de la imagen</label>
+            <input type="text" name="texto_alt" id="campo-alt" maxlength="150"
+                   placeholder="Ej: Torta de chocolate con fresas">
+
+            <div class="solo-modelo">
+                <label class="opcion">
+                    <input type="checkbox" name="auto_rotar" id="campo-auto-rotar" checked>
+                    Girar el modelo automáticamente
+                </label>
+            </div>
+
+            <div class="solo-carrusel">
+                <label for="campo-orden">Orden en el carrusel</label>
+                <input type="number" name="orden" id="campo-orden" min="0" value="0">
+            </div>
+
+            <div class="botones">
+                <button type="button" class="cancelar" id="cancelar-medio">Cancelar</button>
+                <button type="submit" class="guardar" id="guardar-medio">Guardar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- ===== MENSAJES ===== -->
     <div id="mensaje" class="mensaje">
         <div class="mensaje-contenido">
             <span id="icono-mensaje"></span>
@@ -121,6 +145,7 @@
         </div>
     </div>
 
+    <script src="../js/medios.js"></script>
     <script src="../js/categoria.js"></script>
 
 </body>

@@ -8,6 +8,7 @@
     <title>Crear producto | Dulce Rincón</title>
 
     <link rel="stylesheet" href="../css/crear productos.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
   </head>
 
   <body>
@@ -19,15 +20,15 @@
       <p class="subtitulo">Panel de administración</p>
 
       <nav>
-        <a href="../html/index.html" class="activo"> Productos </a>
+        <a href="../html/index.html"> Ver tienda </a>
 
-        <a href="../html/categoria.html"> Categorías </a>
+        <a href="../html/categoria.html"> Categorías y home </a>
 
-        <a href="../html/index.html" >producto</a>
+        <a href="../html/crearproductos.html" class="activo"> Crear producto </a>
 
       </nav>
 
-      <a href="../html/inicio.html" class="cerrar"> Cerrar sesión </a>
+      <a href="../php/cerrar_sesion.php" class="cerrar"> Cerrar sesión </a>
     </aside>
 
     <main class="contenido">
@@ -46,7 +47,7 @@
           <p>Agrega un nuevo producto a tu tienda.</p>
         </div>
 
-        <form id="formProducto" action="/dulcetentacion/php/producto.php" method="POST" enctype="multipart/form-data">
+        <form id="formProducto" action="../php/producto.php" method="POST" enctype="multipart/form-data">
           <label>Nombre del producto</label>
           <input
             type="text"
@@ -70,6 +71,8 @@
             id="precio"
             name="precio"
             placeholder="$ 0"
+            min="1"
+            step="any"
             required
           />
 
@@ -80,19 +83,22 @@
 
 
 
-          <label>Imagen del producto</label>
+          <label>Imagen o modelo 3D del producto</label>
 
           <div class="subir-imagen">
             <span></span>
-            <p>Selecciona una imagen</p>
-            <small>PNG, JPG o JPEG</small>
+            <p>Selecciona una imagen o un modelo 3D</p>
+            <small>PNG, JPG, WEBP, GIF (máx. 5 MB) o modelo .glb (máx. 25 MB)</small>
 
             <input
               type="file"
               id="imagen"
               name="imagen"
-              accept="image/png, image/jpeg"
-            /><img id="vistaPrevia" src="" alt="Vista previa del producto" style="display: none; max-width: 200px;">
+              accept="image/png,image/jpeg,image/webp,image/gif,.glb"
+            />
+            <small id="tipoDetectado" class="tipo-detectado"></small>
+            <div id="vistaPrevia" class="vista-previa"></div>
+          </div>
 
           <div class="botones">
             <a href="../html/index.html" class="cancelar">Cancelar</a>
@@ -109,6 +115,7 @@
         <button id="cerrar-mensaje">Aceptar</button>
       </div>
     </div>
+    <script src="../js/medios.js"></script>
     <script src="../js/crear productos.js"></script>
   </body>
 </html>
