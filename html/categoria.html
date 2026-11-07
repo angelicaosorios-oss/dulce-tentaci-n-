@@ -32,7 +32,7 @@
             <h2>Crear categoría</h2>
             <p>Agrega una nueva categoría para tus productos.</p>
 
-            <form action="../php/categoria.php" method="POST">
+            <form action="../php/categoria.php" method="POST" enctype="multipart/form-data">
 
                 <label for="nombreCategoria">
                     Nombre de la categoría:
@@ -43,6 +43,18 @@
                     id="nombreCategoria"
                     name="nombre_categoria"
                     placeholder="Ej. Postres, Galletas..."
+                    required
+                >
+
+                <label for="imagenCategoria">
+                    Imagen de la categoría:
+                </label>
+
+                <input
+                    type="file"
+                    id="imagenCategoria"
+                    name="imagen"
+                    accept="image/png, image/jpeg"
                     required
                 >
 

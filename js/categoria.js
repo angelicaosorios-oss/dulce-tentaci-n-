@@ -31,6 +31,36 @@ if (parametros.get("error") === "1") {
     mostrarMensaje("⚠️", "¡Ups! Algo salió mal", "No fue posible guardar la categoría. Inténtalo nuevamente.");
 }
 
+if (parametros.get("error") === "imagen") {
+    mostrarMensaje("🖼️", "Falta la imagen", "Selecciona una imagen JPG o PNG de máximo 5 MB.");
+}
+
+if (parametros.get("eliminado") === "correcto") {
+    mostrarMensaje("🗑️", "¡Categoría eliminada!", "La categoría se eliminó correctamente.");
+}
+
+if (parametros.get("error") === "productos") {
+    mostrarMensaje("⚠️", "No se puede eliminar", "Esta categoría todavía tiene productos. Elimina o cambia esos productos primero.");
+}
+
+
+// ELIMINAR CATEGORÍA
+function eliminarCategoria(id, nombre) {
+    if (!confirm("¿Seguro que quieres eliminar la categoría \"" + nombre + "\"?")) return;
+
+    const formulario = document.createElement("form");
+    formulario.method = "POST";
+    formulario.action = "../php/categoria.php";
+
+    formulario.innerHTML = `
+        <input type="hidden" name="eliminar" value="1">
+        <input type="hidden" name="id_categoria" value="${id}">
+    `;
+
+    document.body.appendChild(formulario);
+    formulario.submit();
+}
+
 
 // CARGAR CATEGORÍAS DESDE LA BASE DE DATOS
 async function cargarCategorias() {
@@ -64,8 +94,25 @@ async function cargarCategorias() {
             const codigo = document.createElement("small");
             codigo.textContent = "Código: " + categoria.id_categoria;
 
+            if (categoria.imagen) {
+                const imagen = document.createElement("img");
+                imagen.src = categoria.imagen;
+                imagen.alt = categoria.nombre_categoria;
+                imagen.className = "imagen-categoria";
+                elemento.appendChild(imagen);
+            }
+
+            const botonEliminar = document.createElement("button");
+            botonEliminar.type = "button";
+            botonEliminar.className = "boton-eliminar";
+            botonEliminar.textContent = "Eliminar";
+            botonEliminar.onclick = function () {
+                eliminarCategoria(categoria.id_categoria, categoria.nombre_categoria);
+            };
+
             elemento.appendChild(nombre);
             elemento.appendChild(codigo);
+            elemento.appendChild(botonEliminar);
 
             lista.appendChild(elemento);
         });
