@@ -3,7 +3,7 @@ require("conexion.php");
 
 header("Content-Type: application/json; charset=UTF-8");
 
-$sql = "SELECT id_categoria, nombre_categoria FROM categoria";
+$sql = "SELECT id_categoria, nombre_categoria, imagen FROM categoria ORDER BY id_categoria";
 $resultado = $conn->query($sql);
 
 $categorias = [];

@@ -90,6 +90,25 @@ formulario.addEventListener("submit", async function(event) {
         const domicilio = entrega === "Envio" ? 5000 : 0;
         const total = subtotal + domicilio;
 
+        const datosPedido = new FormData();
+
+datosPedido.append("nombre", nombre + " " + apellidos);
+datosPedido.append("telefono", telefono);
+datosPedido.append("correo", correo);
+datosPedido.append("total", total);
+datosPedido.append("productos", JSON.stringify(carrito));
+
+const respuestaPedido = await fetch("../php/pedido.php", {
+    method: "POST",
+    body: datosPedido
+});
+
+const resultadoPedido = await respuestaPedido.json();
+
+if (!resultadoPedido.success) {
+    throw new Error(resultadoPedido.message);
+}
+
         // CUARTO: CREAR MENSAJE DE WHATSAPP
         const mensajeWhatsApp =
             "¡Hola! Quiero realizar un pedido en Mi Dulce Rincón.\n\n" +

@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+$esAdministrador = (
+    isset($_SESSION['id_usuario']) &&
+    isset($_SESSION['rol']) &&
+    $_SESSION['rol'] === 'administrador' &&
+    isset($_SESSION['correo']) &&
+    $_SESSION['correo'] === 'administrador@midulcerincon.com'
+);
+?>
 <!doctype html>
 <html lang="es">
   <head>
@@ -95,7 +106,7 @@
     <div class="contenedor-productos">
 
         <div class="producto">
-            <img src="../img/postre1.jpg" alt="Postres">
+            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=300&q=80" alt="Postres">
             <div>
                 <b>Deliciosos postres</b>
                 <p>Los favoritos de nuestros clientes</p>
@@ -103,7 +114,7 @@
         </div>
 
         <div class="producto">
-            <img src="../img/postre2.jpg" alt="Galletas">
+            <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=300&q=80" alt="Galletas">
             <div>
                 <b>Galletas especiales</b>
                 <p>Perfectas para cualquier ocasión</p>
@@ -111,7 +122,7 @@
         </div>
 
         <div class="producto">
-            <img src="../img/postre3.jpg" alt="Promociones">
+            <img src="https://images.unsplash.com/photo-1587668178277-295251f900ce?auto=format&fit=crop&w=300&q=80" alt="Promociones">
             <div>
                 <b>Promociones</b>
                 <p>Disfruta nuestras ofertas</p>
@@ -123,7 +134,7 @@
     <section class="productos">
       <h2>NUESTROS PRODUCTOS</h2>
 
-      <div class="contenedor-productos">
+      <div class="contenedor-productos" id="contenedor-categorias">
         <div class="producto">
           <img
             src="https://us.123rf.com/450wm/mikkiorso/mikkiorso2504/mikkiorso250430566/245635797-charming-pastel-milkshakes-with-floral-straws-and-ice-cubes-on-a-pink-background-for-custom-text.jpg?ver=6"
@@ -167,21 +178,26 @@
             alt="Helado"
           />
 <br>
-          <a class="button is -link" type="button" href="../html/helados.html"><h3>Helado</h3></button>
+          <a class="button is -link" href="../html/helados.html">
+    <h3>Helado</h3>
+</a>
         </div>
       </div>
     </section>
     <nav class="opciones-home">
-    <a href="../html/categoria.html" class="categoria">
-        Categorías
+    <?php if ($esAdministrador): ?>
+    <a href="categoria.php" class="categoria">
+        Volver a administración
     </a>
+<?php endif; ?>
 
     <a href="../html/inicio.html" class="cerrar">
         ↪ Cerrar sesión
     </a>
 </nav>
         <script>
-document.addEventListener("DOMContentLoaded", function () {
+// CAMBIOS HECHOS DESDE EL ADMINISTRADOR (Administrar home)
+function aplicarCambiosHome() {
 
     // CARGAR BANNER PRINCIPAL
     const bannerGuardado = localStorage.getItem("bannerPrincipal");
@@ -228,6 +244,55 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+}
+
+document.addEventListener("DOMContentLoaded", aplicarCambiosHome);
+
+// Si el administrador cambia algo mientras el home está abierto, se actualiza solo
+window.addEventListener("storage", function (evento) {
+    if (evento.key === "bannerPrincipal" || evento.key === "productosDestacados") {
+        aplicarCambiosHome();
+    }
+});
+</script>
+    <script>
+// CATEGORÍAS CREADAS DESDE EL ADMINISTRADOR
+
+document.addEventListener("DOMContentLoaded", async function () {
+    const contenedor = document.getElementById("contenedor-categorias");
+    const fijas = ["malteadas", "cupcakes", "galletas", "cheesecakes", "helados"];
+
+    try {
+        const categorias = await fetch("../php/listar_categoria.php").then(r => r.json());
+
+        categorias
+            .filter(c => !fijas.includes(c.nombre_categoria.trim().toLowerCase()))
+            .forEach(function (categoria) {
+                const tarjeta = document.createElement("div");
+                tarjeta.className = "producto";
+
+                const imagen = document.createElement("img");
+                imagen.src = categoria.imagen || "../img/fondoinicio.jpeg";
+                imagen.alt = categoria.nombre_categoria;
+
+                const enlace = document.createElement("a");
+                enlace.className = "button is -link";
+                enlace.href = "../html/productos.html?categoria=" +
+                    encodeURIComponent(categoria.nombre_categoria);
+
+                const nombre = document.createElement("h3");
+                nombre.textContent = categoria.nombre_categoria;
+                enlace.appendChild(nombre);
+
+                tarjeta.appendChild(imagen);
+                tarjeta.appendChild(document.createElement("br"));
+                tarjeta.appendChild(enlace);
+                contenedor.appendChild(tarjeta);
+            });
+
+    } catch (error) {
+        console.error("No se pudieron cargar las categorías nuevas:", error);
+    }
 });
 </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

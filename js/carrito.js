@@ -1,5 +1,24 @@
 
-let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+// LEER CARRITO (descarta productos dañados, por ejemplo con precio inválido)
+function leerCarrito() {
+    let datos;
+
+    try {
+        datos = JSON.parse(localStorage.getItem("carrito")) || [];
+    } catch (error) {
+        datos = [];
+    }
+
+    return datos.filter(producto =>
+        producto &&
+        typeof producto.nombre === "string" &&
+        Number.isFinite(Number(producto.precio)) &&
+        Number(producto.precio) > 0 &&
+        producto.cantidad > 0
+    );
+}
+
+let carrito = leerCarrito();
 
 // FORMATO DE PRECIOS
 function formatoPrecio(numero) {
@@ -12,8 +31,10 @@ function guardarCarrito() {
 }
 
 // AGREGAR PRODUCTOS
-function agregarAlCarrito(id_producto, nombre, precio, imagen) {
-    carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+// Uso: agregarAlCarrito('Cupcake de Fresa', 5000, '../modelos3d/cupcake-fresa.glb')
+// El cuarto parámetro (id_producto de la base de datos) es opcional.
+function agregarAlCarrito(nombre, precio, imagen, id_producto = nombre) {
+    carrito = leerCarrito();
 
     let productoExistente = carrito.find(
         producto => producto.id_producto === id_producto
@@ -37,7 +58,7 @@ function agregarAlCarrito(id_producto, nombre, precio, imagen) {
 
 // MOSTRAR PRODUCTOS
 function mostrarCarrito() {
-    carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    carrito = leerCarrito();
 
     const lista = document.getElementById("lista-carrito");
     const carritoVacio = document.getElementById("carrito-vacio");
@@ -151,7 +172,7 @@ function calcularTotal() {
 
 // REALIZAR PEDIDO: IR A CONTACTO
 function realizarPedido() {
-    carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    carrito = leerCarrito();
 
     if (carrito.length === 0) {
         alert("Tu carrito está vacío.");
@@ -163,6 +184,6 @@ function realizarPedido() {
 
 // INICIAR CARRITO
 document.addEventListener("DOMContentLoaded", function() {
-    carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    carrito = leerCarrito();
     mostrarCarrito();
 });

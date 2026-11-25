@@ -16,109 +16,32 @@
       <h2>Nuestros Cupcakes</h2>
 
       <div class="productos">
-        <div class="tarjeta">
-          <model-viewer
-            class="visor-producto"
-            src="../modelos3d/oreo_cupcake.glb"
-            alt="Modelo 3D de muestra (temporal) para Cupcake de chocolate"
-            camera-controls
-            auto-rotate
-            rotation-per-second="60deg"
-            ar
-            shadow-intensity="5"
-          ></model-viewer>
-          <h3>Chocolate</h3>
-          <p>
-            suave y esponjoso, con un delicioso sabor a chocolate y una cremosa
-            decoración.
-          </p>
-          <h4>$5.000</h4>
-          <a
-            class="button is-link"
-            href="#"
-            onclick="
-              agregarAlCarrito(
-                'Cupcake de Chocolate',
-                5000,
-                '../modelos3d/oreo_cupcake.glb',
-              );
-              return false;
-            "
-          >
-            <h3>Agregar al carrito</h3>
-          </a>
-        </div>
-
-        <div class="tarjeta">
-          <model-viewer
-            class="visor-producto"
-            src="../modelos3d/cupcake -vainilla.glb"
-            alt="Modelo 3D de muestra (temporal) para Cupcake de vainilla"
-            camera-controls
-            auto-rotate
-            rotation-per-second="60deg"
-            ar
-            shadow-intensity="5"
-          ></model-viewer>
-          <h3>Vainilla</h3>
-          <p>
-            clasico, ligero y esponjoso, con un delicado sabor a vainilla con
-            crema dulce .
-          </p>
-          <h4>$4.500</h4>
-          <a
-            class="button is-link"
-            href="#"
-            onclick="
-              agregarAlCarrito(
-                'Cupcake de Vainilla',
-                4500,
-                '../modelos3d/cupcake -vainilla.glb',
-              );
-              return false;
-            "
-          >
-            <h3>Agregar al carrito</h3>
-          </a>
-        </div>
-
-        <div class="tarjeta">
-          <model-viewer
-            class="visor-producto"
-            src="../modelos3d/cupcake-fresa.glb"
-            alt="Modelo 3D de muestra (temporal) para Cupcake de fresa"
-            camera-controls
-            auto-rotate
-            rotation-per-second="60deg"
-            ar
-            shadow-intensity="5"
-          ></model-viewer>
-          <h3>Fresa</h3>
-          <p>
-            dulce y suave, preparado con sabor a fresa y cubierto con una
-            deliciona crema..
-          </p>
-          <h4>$5.000</h4>
-          <a
-            class="button is-link"
-            href="#"
-            onclick="
-              agregarAlCarrito(
-                'Cupcake de Fresa',
-                5000,
-                '../modelos3d/cupcake-fresa.glb',
-              );
-              return false;
-            "
-          >
-            <h3>Agregar al carrito</h3>
-          </a>
-        </div>
+        <!-- Los productos se cargan desde la base de datos (js/productos.js) -->
+        <template data-categoria="Cupcakes" data-titulo="sabor">
+          <div class="tarjeta">
+            <model-viewer
+              data-campo="modelo"
+              class="visor-producto"
+              camera-controls
+              auto-rotate
+              rotation-per-second="60deg"
+              ar
+              shadow-intensity="5"
+            ></model-viewer>
+            <h3 data-campo="nombre"></h3>
+            <p data-campo="descripcion"></p>
+            <h4 data-campo="precio"></h4>
+            <a data-campo="agregar" class="button is-link" href="#">
+              <h3>Agregar al carrito</h3>
+            </a>
+          </div>
+        </template>
       </div>
-      <a class="button is -link" type="button" href="../html/index.html"
+      <a class="button is -link" type="button" href="../html/index.php"
         ><h3>inicio</h3></a
       >
     </section>
     <script src="../js/carrito.js"></script>
+    <script src="../js/productos.js"></script>
   </body>
 </html>

@@ -1,3 +1,16 @@
+<?php
+session_start();
+
+if (
+    !isset($_SESSION['id_usuario']) ||
+    !isset($_SESSION['rol']) ||
+    $_SESSION['rol'] !== 'administrador' ||
+    $_SESSION['correo'] !== 'administrador@midulcerincon.com'
+) {
+    header("Location: inicio.html");
+    exit();
+}
+?>
 <!doctype html>
 <html lang="es">
   <head>
@@ -8,6 +21,11 @@
     <title>Crear producto | Dulce Rincón</title>
 
     <link rel="stylesheet" href="../css/crear productos.css" />
+
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"
+    ></script>
   </head>
 
   <body>
@@ -19,11 +37,11 @@
       <p class="subtitulo">Panel de administración</p>
 
       <nav>
-        <a href="../html/index.html" class="activo"> Productos </a>
+        <a href="../html/index.php" class="activo"> Productos </a>
 
-        <a href="../html/categoria.html"> Categorías </a>
+        <a href="../html/categoria.php"> Categorías </a>
 
-        <a href="../html/index.html" >producto</a>
+        <a href="../html/index.php" >producto</a>
 
       </nav>
 
@@ -46,7 +64,7 @@
           <p>Agrega un nuevo producto a tu tienda.</p>
         </div>
 
-        <form id="formProducto" action="/dulcetentacion/php/producto.php" method="POST" enctype="multipart/form-data">
+        <form id="formProducto" action="../php/producto.php" method="POST" enctype="multipart/form-data">
           <label>Nombre del producto</label>
           <input
             type="text"
@@ -80,18 +98,19 @@
 
 
 
-          <label>Imagen del producto</label>
+          <label>Modelo 3D del producto</label>
 
           <div class="subir-imagen">
             <span></span>
-            <p>Selecciona una imagen</p>
-            <small>PNG, JPG o JPEG</small>
+            <p>Selecciona el modelo 3D</p>
+            <small>Archivo GLB (máximo 20 MB)</small>
 
             <input
               type="file"
               id="imagen"
               name="imagen"
-              accept="image/png, image/jpeg"
+              accept=".glb"
+              required
             /><img id="vistaPrevia" src="" alt="Vista previa del producto" style="display: none; max-width: 200px;">
 
           <div class="botones">
@@ -109,6 +128,6 @@
         <button id="cerrar-mensaje">Aceptar</button>
       </div>
     </div>
-    <script src="../js/crear productos.js"></script>
+    <script src="../js/crearproducto.js"></script>
   </body>
 </html>

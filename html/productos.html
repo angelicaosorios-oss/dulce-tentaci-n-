@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Productos - dulce Rincón</title>
+    <!-- Página para cualquier categoría creada desde el administrador.
+         Uso: productos.html?categoria=NombreDeLaCategoria
+         Reutiliza el diseño de la página de cupcakes (mismas clases y estilos). -->
+    <link rel="stylesheet" href="../css/cupcake.css" />
+    <link rel="stylesheet" href="../css/visor3d.css" />
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"
+    ></script>
+  </head>
+  <body>
+    <section id="cupcakes">
+      <h2 id="titulo-categoria">Nuestros productos</h2>
+
+      <div class="productos">
+        <!-- Los productos se cargan desde la base de datos (js/productos.js) -->
+        <template data-categoria="" data-titulo="nombre">
+          <div class="tarjeta">
+            <model-viewer data-campo="modelo" class="visor-producto" camera-controls auto-rotate rotation-per-second="60deg" ar shadow-intensity="5"></model-viewer>
+            <h3 data-campo="nombre"></h3>
+            <p data-campo="descripcion"></p>
+            <h4 data-campo="precio"></h4>
+            <a data-campo="agregar" class="button is-link" href="#">
+              <h3>Agregar al carrito</h3>
+            </a>
+          </div>
+        </template>
+      </div>
+      <a class="button is -link" type="button" href="../html/index.php"
+        ><h3>inicio</h3></a
+      >
+    </section>
+    <script>
+      // Toma la categoría de la URL y la pone en el título y en la plantilla
+      const categoria = new URLSearchParams(window.location.search).get("categoria") || "";
+      document.querySelector("template[data-categoria]").dataset.categoria = categoria;
+      if (categoria) {
+        document.getElementById("titulo-categoria").textContent = "Nuestros " + categoria;
+        document.title = categoria + " - dulce Rincón";
+      }
+    </script>
+    <script src="../js/carrito.js"></script>
+    <script src="../js/productos.js"></script>
+  </body>
+</html>

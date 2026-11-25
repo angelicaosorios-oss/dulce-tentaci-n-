@@ -27,8 +27,16 @@ if (parametros.get("registro") === "correcto") {
     mostrarMensaje("🎂", "¡Categoría guardada!", "La categoría se guardó correctamente.");
 }
 
-if (parametros.get("error") === "1") {
-    mostrarMensaje("⚠️", "¡Ups! Algo salió mal", "No fue posible guardar la categoría. Inténtalo nuevamente.");
+const erroresCategoria = {
+    "1": "No fue posible guardar la categoría. Inténtalo nuevamente.",
+    "nombre": "Escribe el nombre de la categoría.",
+    "sin_imagen": "No llegó ninguna imagen. Selecciona una imagen para la categoría (si el campo no aparece, recarga la página con Ctrl + F5).",
+    "formato": "El archivo no es una imagen JPG, PNG o WEBP válida. Si la descargaste de internet, puede que tenga otro formato aunque diga .jpg.",
+    "tamano": "La imagen pesa demasiado. El máximo es 5 MB."
+};
+
+if (erroresCategoria[parametros.get("error")]) {
+    mostrarMensaje("⚠️", "¡Ups! Algo salió mal", erroresCategoria[parametros.get("error")]);
 }
 
 
@@ -64,6 +72,14 @@ async function cargarCategorias() {
             const codigo = document.createElement("small");
             codigo.textContent = "Código: " + categoria.id_categoria;
 
+            if (categoria.imagen) {
+                const foto = document.createElement("img");
+                foto.src = categoria.imagen;
+                foto.alt = categoria.nombre_categoria;
+                foto.style.cssText = "width: 60px; height: 60px; object-fit: cover; border-radius: 50%; float: right;";
+                elemento.appendChild(foto);
+            }
+
             elemento.appendChild(nombre);
             elemento.appendChild(codigo);
 
@@ -77,52 +93,105 @@ async function cargarCategorias() {
 }
 
 
-// EDITAR BANNER PRINCIPAL
-function editarBanner() {
-    const selector = document.createElement("input");
+// ADMINISTRAR HOME
+// Los cambios se guardan en el navegador (localStorage) y el home (index.html)
+// los lee al abrirse; si el home ya está abierto en otra pestaña, se actualiza solo.
 
-    selector.type = "file";
-    selector.accept = "image/*";
+// Imagen que tiene el home en el banner cuando todavía no se ha cambiado
+const BANNER_INICIAL =
+    "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200&q=80";
 
-    selector.onchange = function () {
-        const archivo = selector.files[0];
-
-        if (!archivo) return;
-
+// Convierte un archivo (o una imagen reducida) en texto para poder guardarlo
+function archivoATexto(archivo) {
+    return new Promise((resolver, rechazar) => {
         const lector = new FileReader();
+        lector.onload = () => resolver(lector.result);
+        lector.onerror = rechazar;
+        lector.readAsDataURL(archivo);
+    });
+}
 
-        lector.onload = function (evento) {
-            const imagen = evento.target.result;
+// Abre el selector de archivos y devuelve la imagen elegida ya reducida
+function elegirImagen(ladoMaximo) {
+    return new Promise(resolver => {
+        const selector = document.createElement("input");
+        selector.type = "file";
+        selector.accept = "image/png, image/jpeg, image/webp";
 
-            localStorage.setItem("bannerPrincipal", imagen);
+        selector.addEventListener("change", async function () {
+            const archivo = selector.files[0];
 
-            let vista = document.getElementById("vista-banner");
-
-            if (!vista) {
-                vista = document.createElement("img");
-                vista.id = "vista-banner";
-                vista.style.width = "180px";
-                vista.style.height = "100px";
-                vista.style.objectFit = "cover";
-
-                document.querySelector(".banner").appendChild(vista);
+            if (!archivo) {
+                resolver(null);
+                return;
             }
 
-            vista.src = imagen;
+            try {
+                const reducida = await reducirImagen(archivo, ladoMaximo);
+                resolver(await archivoATexto(reducida));
+            } catch (error) {
+                console.error(error);
+                mostrarMensaje("⚠️", "¡Ups! Algo salió mal",
+                    "No se pudo leer la imagen. Prueba con una foto JPG o PNG.");
+                resolver(null);
+            }
+        });
 
-            alert("¡Banner actualizado correctamente!");
-        };
+        selector.click();
+    });
+}
 
-        lector.readAsDataURL(archivo);
-    };
+// Guarda en el navegador; avisa si no hay espacio en vez de fallar en silencio
+function guardarEnHome(clave, valor) {
+    try {
+        localStorage.setItem(clave, valor);
+        return true;
+    } catch (error) {
+        console.error(error);
+        mostrarMensaje("⚠️", "No se pudo guardar",
+            "No hay espacio suficiente para guardar la imagen. Prueba con una imagen más pequeña.");
+        return false;
+    }
+}
 
-    selector.click();
+function mostrarBanner(imagen) {
+    const banner = document.querySelector(".banner");
+    if (!banner) return;
+
+    let vista = document.getElementById("vista-banner");
+
+    if (!vista) {
+        vista = document.createElement("img");
+        vista.id = "vista-banner";
+        vista.alt = "Banner principal";
+        vista.style.width = "180px";
+        vista.style.height = "100px";
+        vista.style.objectFit = "cover";
+        vista.style.borderRadius = "8px";
+
+        banner.insertBefore(vista, banner.querySelector("button"));
+    }
+
+    vista.src = imagen;
+}
+
+
+// EDITAR BANNER PRINCIPAL
+async function editarBanner() {
+    const imagen = await elegirImagen(1600);
+
+    if (!imagen) return;
+
+    if (guardarEnHome("bannerPrincipal", imagen)) {
+        mostrarBanner(imagen);
+        mostrarMensaje("🎂", "¡Banner actualizado!",
+            "El nuevo banner ya aparece en el home.");
+    }
 }
 
 
 // EDITAR PRODUCTOS DESTACADOS
-
-function editarProducto(boton) {
+async function editarProducto(boton) {
     const producto = boton.closest(".producto");
 
     const titulo = producto.querySelector("b");
@@ -140,61 +209,34 @@ function editarProducto(boton) {
 
     if (nuevaDescripcion === null) return;
 
-    const selector = document.createElement("input");
-    selector.type = "file";
-    selector.accept = "image/*";
-
-    selector.style.display = "none";
-    document.body.appendChild(selector);
-
-    selector.addEventListener("change", function () {
-        const archivo = selector.files[0];
-
-        if (!archivo) {
-            selector.remove();
-            return;
-        }
-
-        const lector = new FileReader();
-
-        lector.onload = function (evento) {
-            guardarProducto(evento.target.result);
-            selector.remove();
-        };
-
-        lector.readAsDataURL(archivo);
-    });
-
-    function guardarProducto(nuevaImagen) {
-        const productos = JSON.parse(
-            localStorage.getItem("productosDestacados")
-        ) || [];
-
-        const indice = Array.from(producto.parentElement.children).indexOf(producto);
-
-        productos[indice] = {
-            nombre: nuevoNombre.trim(),
-            descripcion: nuevaDescripcion.trim(),
-            imagen: nuevaImagen
-        };
-
-        localStorage.setItem("productosDestacados", JSON.stringify(productos));
-
-        titulo.textContent = nuevoNombre.trim();
-        descripcion.textContent = nuevaDescripcion.trim();
-        imagen.src = nuevaImagen;
-
-        alert("¡Producto actualizado correctamente!");
-    }
+    let nuevaImagen = imagen.getAttribute("src");
 
     if (confirm("¿Deseas cambiar la imagen del producto?")) {
-        selector.click();
-    } else {
-        guardarProducto(imagen.src);
-        selector.remove();
+        const elegida = await elegirImagen(600);
+        if (elegida) nuevaImagen = elegida;
     }
-}
 
+    const productos = JSON.parse(
+        localStorage.getItem("productosDestacados")
+    ) || [];
+
+    const indice = Array.from(producto.parentElement.children).indexOf(producto);
+
+    productos[indice] = {
+        nombre: nuevoNombre.trim(),
+        descripcion: nuevaDescripcion.trim(),
+        imagen: nuevaImagen
+    };
+
+    if (!guardarEnHome("productosDestacados", JSON.stringify(productos))) return;
+
+    titulo.textContent = nuevoNombre.trim();
+    descripcion.textContent = nuevaDescripcion.trim();
+    imagen.src = nuevaImagen;
+
+    mostrarMensaje("🧁", "¡Producto actualizado!",
+        "El producto destacado ya aparece así en el home.");
+}
 
 
 // MOSTRAR LOS CAMBIOS GUARDADOS
@@ -203,7 +245,7 @@ function cargarCambios() {
         localStorage.getItem("productosDestacados")
     ) || [];
 
-    const elementos = document.querySelectorAll(".producto");
+    const elementos = document.querySelectorAll(".productos .producto");
 
     elementos.forEach((producto, indice) => {
         if (!productos[indice]) return;
@@ -213,25 +255,90 @@ function cargarCambios() {
         producto.querySelector("img").src = productos[indice].imagen;
     });
 
-    const bannerGuardado = localStorage.getItem("bannerPrincipal");
+    // Siempre se muestra el banner que tiene el home en este momento
+    mostrarBanner(localStorage.getItem("bannerPrincipal") || BANNER_INICIAL);
+}
 
-    if (bannerGuardado) {
-        let vista = document.getElementById("vista-banner");
 
-        if (!vista && document.querySelector(".banner")) {
-            vista = document.createElement("img");
-            vista.id = "vista-banner";
-            vista.style.width = "180px";
-            vista.style.height = "100px";
-            vista.style.objectFit = "cover";
+// VISTA PREVIA DE LA IMAGEN DE LA CATEGORÍA
+function vistaPreviaCategoria() {
+    const input = document.getElementById("imagenCategoria");
+    const vista = document.getElementById("vistaCategoria");
 
-            document.querySelector(".banner").appendChild(vista);
+    if (!input || !vista) return;
+
+    input.addEventListener("change", function () {
+        const archivo = input.files[0];
+
+        if (!archivo) {
+            vista.style.display = "none";
+            return;
         }
 
-        if (vista) {
-            vista.src = bannerGuardado;
+        vista.src = URL.createObjectURL(archivo);
+        vista.style.display = "block";
+    });
+}
+
+
+// REDUCIR LA IMAGEN ANTES DE ENVIARLA
+// Las fotos grandes (por ejemplo de celular) se achican a un máximo de
+// 1200 px y se comprimen, para que pesen poco y la página cargue rápido.
+const LADO_MAXIMO = 1200;
+
+async function reducirImagen(archivo, ladoMaximo = LADO_MAXIMO) {
+    const imagen = await createImageBitmap(archivo);
+
+    const escala = Math.min(1, ladoMaximo / Math.max(imagen.width, imagen.height));
+    const ancho = Math.round(imagen.width * escala);
+    const alto = Math.round(imagen.height * escala);
+
+    const lienzo = document.createElement("canvas");
+    lienzo.width = ancho;
+    lienzo.height = alto;
+    lienzo.getContext("2d").drawImage(imagen, 0, 0, ancho, alto);
+
+    // WEBP conserva la transparencia de los PNG y pesa mucho menos
+    const blob = await new Promise(resolver =>
+        lienzo.toBlob(resolver, "image/webp", 0.85)
+    );
+
+    const nombre = archivo.name.replace(/\.[^.]+$/, "") + ".webp";
+    return new File([blob], nombre, { type: "image/webp" });
+}
+
+function prepararFormularioCategoria() {
+    const formulario = document.querySelector('form[action$="categoria.php"]');
+    const input = document.getElementById("imagenCategoria");
+
+    if (!formulario || !input) return;
+
+    formulario.addEventListener("submit", async function (evento) {
+        const archivo = input.files[0];
+
+        // Imágenes pequeñas (menos de 1 MB) se envían tal cual
+        if (!archivo || archivo.size <= 1024 * 1024) return;
+
+        evento.preventDefault();
+
+        const boton = formulario.querySelector('button[type="submit"]');
+        if (boton) {
+            boton.disabled = true;
+            boton.textContent = "Preparando imagen...";
         }
-    }
+
+        try {
+            const reducida = await reducirImagen(archivo);
+            const lista = new DataTransfer();
+            lista.items.add(reducida);
+            input.files = lista.files;
+        } catch (error) {
+            // Si el navegador no puede leer la imagen, se envía la original
+            console.error("No se pudo reducir la imagen:", error);
+        }
+
+        formulario.submit();
+    });
 }
 
 
@@ -239,5 +346,7 @@ function cargarCambios() {
 document.addEventListener("DOMContentLoaded", function () {
     cargarCategorias();
     cargarCambios();
+    vistaPreviaCategoria();
+    prepararFormularioCategoria();
 });
 

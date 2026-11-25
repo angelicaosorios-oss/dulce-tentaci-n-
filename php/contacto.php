@@ -49,7 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if ($stmt->execute()) {
         echo json_encode([
             "success" => true,
-            "message" => "Datos guardados correctamente."
+            "message" => "Datos guardados correctamente.",
+            "id_contacto" => $conn->insert_id
         ]);
     } else {
         echo json_encode([

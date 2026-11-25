@@ -8,7 +8,7 @@ async function cargarCategoriasProducto() {
     select.innerHTML = '<option value="">Cargando categorías...</option>';
 
     try {
-        const respuesta = await fetch("/dulcetentacion/php/listar_categoria.php");
+        const respuesta = await fetch("../php/listar_categoria.php");
 
         if (!respuesta.ok) {
             throw new Error("No se pudieron cargar las categorías");
@@ -95,13 +95,27 @@ document.addEventListener("DOMContentLoaded", function() {
         inputImagen.addEventListener("change", function() {
             const archivo = inputImagen.files[0];
 
+            const anterior = document.getElementById("vistaPrevia3d");
+            if (anterior) anterior.remove();
+
             if (!archivo) {
                 vistaPrevia.style.display = "none";
                 return;
             }
 
-            vistaPrevia.src = URL.createObjectURL(archivo);
-            vistaPrevia.style.display = "block";
+            vistaPrevia.style.display = "none";
+
+            // Vista previa del modelo 3D con <model-viewer>
+            if (archivo.name.toLowerCase().endsWith(".glb")) {
+                const visor = document.createElement("model-viewer");
+                visor.id = "vistaPrevia3d";
+                visor.setAttribute("src", URL.createObjectURL(archivo));
+                visor.setAttribute("camera-controls", "");
+                visor.setAttribute("auto-rotate", "");
+                visor.style.width = "200px";
+                visor.style.height = "200px";
+                vistaPrevia.insertAdjacentElement("afterend", visor);
+            }
         });
     }
 
